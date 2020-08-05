@@ -16,7 +16,7 @@ class CreateTableOrders extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('status');
-            $table->mediumText('comment');
+            $table->mediumText('comment')->nullable();
             $table->integer('customer_id');
         });
     }

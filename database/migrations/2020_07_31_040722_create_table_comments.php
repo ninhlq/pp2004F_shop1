@@ -18,6 +18,7 @@ class CreateTableComments extends Migration
             $table->integer('user_id');
             $table->mediumText('content');
             $table->integer('reply_to_id')->nullable();
+            $table->tinyInteger('rating')->nullable();
             $table->timestamps();
         });
     }
