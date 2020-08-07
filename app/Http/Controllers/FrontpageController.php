@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class FrontpageController extends Controller
 {
     public function home()
     {
-        return view('frontpage_def.pages.index');
+        $products = Product::orderBy('id', 'desc')->paginate(20);
+        return view('frontpage_def.pages.index', compact('products'));
     }
 
     public function productList()

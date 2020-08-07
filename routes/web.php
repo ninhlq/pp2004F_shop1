@@ -34,4 +34,10 @@ Route::prefix('admin')->as('admin.')->middleware('auth.admin')->group(function()
     Route::post('login', 'Auth\LoginController@login')->name('login');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/', 'AdminController@dashboard');
+    Route::resource('product', 'ProductController');
+    Route::get('media', 'AdminController@media');
+
+    Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 });
