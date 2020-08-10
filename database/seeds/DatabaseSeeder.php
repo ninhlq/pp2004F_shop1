@@ -13,12 +13,13 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class)
             ->call(BrandSeeder::class)
-            ->call(ProductSeeder::class)
-            ->call(OrderSeeder::class)
-            ->call(OrderDetailsSeeder::class)
-            ->call(BillSeeder::class)
-            ->call(ProductImageSeeder::class)
-            ->call(CommentSeeder::class)
-            ->call(ProductCommentSeeder::class);
+            // ->call(ProductSeeder::class)
+            // ->call(OrderSeeder::class)
+            // ->call(OrderDetailsSeeder::class)
+            // ->call(BillSeeder::class)
+            // ->call(ProductImageSeeder::class)
+            // ->call(CommentSeeder::class)
+            // ->call(ProductCommentSeeder::class)
+            ;
     }
 }

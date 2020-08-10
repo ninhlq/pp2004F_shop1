@@ -52,7 +52,7 @@
                             </li>
                             <!-- Setting Area End Here -->
                             @if (Auth::check())
-                            <li>{{ Auth::user()->username }}</li>
+                            <li>{{ Auth::user()->getFullName() }}</li>
                             @endif
                         </ul>
                     </div>

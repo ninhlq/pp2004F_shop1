@@ -20,4 +20,9 @@ class AdminController extends Controller
     {
         return view('admin_def.pages.login');
     }
+
+    public function media()
+    {
+        return view('admin_def.pages.media');
+    }
 }

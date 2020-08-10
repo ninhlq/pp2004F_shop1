@@ -24,8 +24,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Product List</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Add New Product</a></li>
+                    <li class="active"><a href="{{ route('admin.product.index') }}"><i class="fa fa-list"></i> Product List</a></li>
+                    <li><a href="{{ route('admin.product.create') }}"><i class="fa fa-cube"></i> Add New Product</a></li>
                 </ul>
             </li>
             <li>
@@ -69,7 +69,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ url('admin/media') }}">
                     <i class="fa fa-photo"></i>
                     <span>Media</span>
                 </a>

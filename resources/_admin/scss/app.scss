@@ -1,3 +1,7 @@
+.pt-20 {
+    padding-top: 20px;
+}
+
 textarea {
     resize: vertical;
 }
@@ -116,4 +120,61 @@ table.dataTable {
     i.fa-check {
         color: #62c500;
     }
+}
+
+// Product Details Slick
+.product-details-thumbs .slick-arrow,
+.tab-style-right .slick-arrow,
+.tab-style-left .slick-arrow {
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    right: auto;
+    background: #242424;
+    color: #ffffff;
+    border: none;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    z-index: 5;
+    visibility: hidden;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+.tab-style-right .slick-arrow,
+.tab-style-left .slick-arrow {
+    top: 16px;
+    left: 40px;
+    right: auto;
+}
+.product-details-thumbs .slick-arrow:hover {
+    background: #fed700;
+    color: #ffffff;
+}
+.product-details-thumbs .slick-arrow.slick-next,
+.tab-style-right .slick-arrow.slick-next {
+    right: 10px;
+    left: auto;
+}
+.tab-style-right .slick-arrow.slick-next,
+.tab-style-left .slick-arrow.slick-next {
+    right: 40px;
+    left: auto;
+    bottom: 0;
+    top: auto;
+}
+.product-details-thumbs:hover .slick-arrow,
+.tab-style-right:hover .slick-arrow,
+.tab-style-left:hover .slick-arrow {
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    visibility: visible;
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }

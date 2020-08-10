@@ -9,6 +9,7 @@ $factory->define(Product::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
         'product_code' => Str::random(12),
+        'slug' => Str::random(12),
         'buy_price' => $price = $faker->numberBetween(1000, 50000),
         'current_price' => $price - $faker->numberBetween(0, $price*rand(0, 4)/10),
         'quantity_in_stock' => $faker->numberBetween(0, 1000),

@@ -17,13 +17,14 @@ class CreateTableProducts extends Migration
             $table->id();
             $table->string('name');
             $table->string('product_code')->unique();
+            $table->string('slug')->unique();
             $table->integer('buy_price');
             $table->integer('current_price');
             $table->integer('quantity_in_stock')->default(0);
             $table->mediumText('description');
-            $table->smallInteger('sales_off')->nullable();
+            $table->smallInteger('sale_off')->nullable();
             $table->integer('brand_id');
-            $table->json('properties');
+            $table->json('properties')->nullable();
             $table->timestamps();
         });
     }
