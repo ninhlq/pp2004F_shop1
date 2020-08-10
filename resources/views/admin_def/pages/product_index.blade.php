@@ -13,8 +13,10 @@
                             <th>ID</th>
                             <th>Product Name</th>
                             <th>Brand</th>
-                            <th>Sales last month</th>
-                            <th>Total sales</th>
+                            <th width="140px">Import Price (VNĐ)</th>
+                            <th width="140px">Current Price (VNĐ)</th>
+                            <th width="150px">Sales last month</th>
+                            <th width="150px">Total sales</th>
                             <th width="80px">Action</th>
                         </tr>
                     </thead>
@@ -24,6 +26,8 @@
                             <td>{{ $product->id }}</td>
                             <td><a href="{{ route('admin.product.show', $product->id) }}">{{ $product->name }}</a></td>
                             <td>{{ $product->brand->name }}</td>
+                            <td>{{ $product->buy_price }}.000</td>
+                            <td>{{ $product->current_price }}.000</td>
                             <td>fdsgdsf</td>
                             <td>fdsgdsf</td>
                             <td>
@@ -59,6 +63,8 @@
             'autoWidth'   : false,
             'columns'     : [
                 {orderable: true, visible: false},
+                {orderable: true},
+                {orderable: true},
                 {orderable: true},
                 {orderable: true},
                 {orderable: true},

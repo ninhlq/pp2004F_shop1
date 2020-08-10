@@ -1914,6 +1914,10 @@ textarea:focus {
 	left: 0;
 	z-index: 99;
 	width: 100%;
+	pointer-events: none;
+}
+.megamenu-static-holder:hover .hb-megamenu {
+	pointer-events: all;
 }
 .megamenu-holder .hb-megamenu {
 	width: auto;

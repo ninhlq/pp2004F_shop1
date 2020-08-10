@@ -63,7 +63,7 @@
                         <span class="input-group-addon">VNĐ</span>
                         <input type="number" name="buy_price" class="form-control" min="0"
                             @if(!empty(old('buy_price'))) value="{{ old('buy_price') }}" @endif>
-                        <div class="input-group-addon"><b>,000</b></div>
+                        <div class="input-group-addon"><b>.000</b></div>
                     </div>
                     @error('buy_price')
                     <div class="help-block">
@@ -79,7 +79,7 @@
                         <span class="input-group-addon">VNĐ</span>
                         <input type="number" name="current_price" class="form-control" min="0"
                             @if(!empty(old('current_price'))) value="{{ old('current_price') }}" @endif>
-                        <div class="input-group-addon"><b>,000</b></div>
+                        <div class="input-group-addon"><b>.000</b></div>
                     </div>
                     @error('current_price')
                     <div class="help-block">

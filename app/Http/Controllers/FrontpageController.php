@@ -58,4 +58,17 @@ class FrontpageController extends Controller
         return view('frontpage_def.pages.search');
     }
 
+    public function ajaxProduct(Request $request)
+    {
+        $product = Product::findOrFail($request->product);
+        if ($product) {
+            $html = view('frontpage_def.partials.modal_product_preview')->with('product', $product)->render();
+            return response()->json([
+                'success' => true,
+                'html' => $html,
+            ]);
+        } else {
+            return false;
+        }
+    }
 }

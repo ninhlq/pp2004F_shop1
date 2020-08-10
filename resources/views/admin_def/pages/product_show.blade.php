@@ -9,31 +9,31 @@
     <div class="col-xs-12">
         <div class="box box-warning">
             <div class="box-body">
-                <div class="col-xs-12 col-md-4">
+                <div class="col-xs-12 col-md-3">
                     @if (count($product->images) > 1)
                         <div class="product-details-images slider-navigation-1 text-center">
                             @foreach($product->images as $img)
                             <div class="lg-image text-center">
-                                <img src="{{ $img->image }}" alt="product image" style="max-height: 330px">
+                                <img src="{{ $img->image }}" alt="product image" style="width: 100%; max-height: 330px">
                             </div>
                             @endforeach
                         </div>
                         <div class="product-details-thumbs slider-thumbs-1">                                        
                             @foreach($product->images as $img)
                             <div class="sm-image">
-                                <img src="{{ $product->getThumb($img->image) }}" style="height: 120px">
+                                <img src="{{ $product->getThumb($img->image) }}" style="width: 100%; max-height: 120px">
                             </div>
                             @endforeach
                         </div>
                     @elseif (count($product->images) == 1)
-                        <div class="product-image text-center">
+                        <div class="sm-image text-center">
                             <img src="{{ $product->images[0]->image }}" alt="" class="img-responsive" style="max-height: 330px">    
                         </div>
                     @else
                         <p>Product Image Not Available</p>
                     @endif
                 </div>
-                <div class="col-xs-12 col-md-8">
+                <div class="col-xs-12 col-md-9">
                     <h3 class="box-title lead"><b>{{ $product->name }}</b></h3>
                     <div class="product-details">
                         <div class="table-responsive">
@@ -55,11 +55,11 @@
                                 </tr>
                                 <tr>
                                     <th>Import Price</th>
-                                    <td>{{ $product->buy_price }}</td>
+                                    <td>{{ $product->buy_price }}.000 VNĐ</td>
                                 </tr>
                                 <tr>
                                     <th>Current price</th>
-                                    <td>{{ $product->current_price }}</td>
+                                    <td>{{ $product->current_price }}.000 VNĐ</td>
                                 </tr>
                                 <tr>
                                     <th>Sale Off</th>
@@ -99,7 +99,7 @@
 
 @push('js')
     <script>
-         $('.product-details-images').each(function(){
+        $('.product-details-images').each(function(){
             var $this = $(this);
             var $thumb = $this.siblings('.product-details-thumbs, .tab-style-left');
             $this.slick({
@@ -113,16 +113,13 @@
                 centerMode: true,
                 centerPadding: 0,
                 asNavFor: $thumb,
-                pauseOnFocus: true,
-                responsive:true,
-                adaptiveHeight: true,
             });
         });
         $('.product-details-thumbs').each(function(){
             var $this = $(this);
             var $details = $this.siblings('.product-details-images');
             $this.slick({
-                slidesToShow: {{ count($product->images) }},
+                slidesToShow: 4,
                 slidesToScroll: 1,
                 autoplay: false,
                 autoplaySpeed: 5000,
