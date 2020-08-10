@@ -914,14 +914,6 @@
                 <div class="row product-list">
                     @if( isset($products) )
                     @foreach($products as $product)
-                    {{-- @php
-                        if (count($product->images) > 1) {
-                            $image = $product->images[0]->image;
-                        } elseif (count($product->images) == 1) {
-                            $image 
-                        }
-
-                    @endphp --}}
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                         <!-- single-product-wrap start -->
                         <div class="single-product-wrap">
@@ -950,13 +942,16 @@
                                     </div>
                                     <h4><a class="product_name" href="single-product.html">{{ $product->name }}</a></h4>
                                     <div class="price-box">
-                                        <span class="new-price">{{ $product->current_price }},000 VND</span>
+                                        <span class="new-price">{{ $product->current_price }}.000 VNĐ</span>
                                     </div>
                                 </div>
                                 <div class="add-actions">
                                     <ul class="add-actions-link">
                                         <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                        <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"
+                                            data-request="product/{{$product->id}}/ajax" data-item="{{ $product->id }}">
+                                            <i class="fa fa-eye"></i></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -1041,7 +1036,70 @@
     </div>
 </div>
 <!-- Li's Static Home Area End Here -->
-@include('frontpage_def.partials.modal_product_preview')
+<div class="modal fade modal-wrapper" id="exampleModalCenter">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-ajax">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
+@push('js')
+<script>
+    (function($){
+        $('.quick-view-btn').click(function(){
+            $.ajax({
+                url: $(this).data('request'),
+                type: 'GET',
+                dataType: 'json',
+            }).done(function(result){
+                $('#exampleModalCenter').find('.modal-ajax').html(result.html);
+                $('.product-details-images').each(function(){
+                    var $this = $(this);
+                    var $thumb = $this.siblings('.product-details-thumbs, .tab-style-left');
+                    $this.slick({
+                        arrows: false,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        autoplay: false,
+                        autoplaySpeed: 5000,
+                        dots: false,
+                        infinite: true,
+                        centerMode: false,
+                        centerPadding: 0,
+                        asNavFor: $thumb,
+                    });
+                });
+                $('.product-details-thumbs').each(function(){
+                    var $this = $(this);
+                    var $details = $this.siblings('.product-details-images');
+                    $this.slick({
+                        slidesToShow: 4,
+                        slidesToScroll: 1,
+                        autoplay: false,
+                        autoplaySpeed: 5000,
+                        dots: false,
+                        infinite: true,
+                        focusOnSelect: true,
+                        centerMode: true,
+                        centerPadding: 0,
+                        prevArrow: '<span class="slick-prev"><i class="fa fa-angle-left"></i></span>',
+                        nextArrow: '<span class="slick-next"><i class="fa fa-angle-right"></i></span>',
+                        asNavFor: $details,
+                    });
+                });
+            }).fail(function(result){
+                $('#exampleModalCenter').find('.modal-ajax').html('Not Available');
+            });
+        });
+    })(jQuery);
+</script>
+@endpush
