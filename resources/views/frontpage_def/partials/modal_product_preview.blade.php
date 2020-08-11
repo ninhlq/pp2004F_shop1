@@ -45,7 +45,7 @@
                     </ul>
                 </div>
                 <div class="price-box pt-20">
-                    <span class="new-price new-price-2">{{ $product->current_price }}.000 VNĐ</span>
+                    <span class="new-price new-price-2">{{ $product->money_format() }} VNĐ</span>
                 </div>
                 <div class="product-desc">
                     <p>
@@ -62,7 +62,7 @@
                                 <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                             </div>
                         </div>
-                        <button class="add-to-cart" type="submit">Add to cart</button>
+                        <button class="add-to-cart" data-request="{{$product->id}}">Add to cart</button>
                     </form>
                 </div>
                 <div class="product-additional-info pt-25">
