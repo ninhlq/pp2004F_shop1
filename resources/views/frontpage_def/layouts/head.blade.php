@@ -20,3 +20,7 @@
 <![endif]-->
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+
+<script>
+    var base_url = "{{ url('/') }}/";
+</script>

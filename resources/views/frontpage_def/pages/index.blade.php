@@ -919,7 +919,6 @@
                         <div class="single-product-wrap">
                             <div class="product-image">
                                 <a href="single-product.html">
-                                
                                     <img src="{{ (count($product->images) >= 1) ? $product->images[0]->image : '' }}" alt="Li's Product Image">
                                 </a>
                                 <span class="sticker">New</span>
@@ -942,12 +941,12 @@
                                     </div>
                                     <h4><a class="product_name" href="single-product.html">{{ $product->name }}</a></h4>
                                     <div class="price-box">
-                                        <span class="new-price">{{ $product->current_price }}.000 VNĐ</span>
+                                        <span class="new-price">{{ $product->money_format() }} <sup> VNĐ</sup></span>
                                     </div>
                                 </div>
                                 <div class="add-actions">
                                     <ul class="add-actions-link">
-                                        <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                        <li class="add-cart active"><a data-request="{{ $product->id }}">Add to cart</a></li>
                                         <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"
                                             data-request="product/{{$product->id}}/ajax" data-item="{{ $product->id }}">
                                             <i class="fa fa-eye"></i></a>

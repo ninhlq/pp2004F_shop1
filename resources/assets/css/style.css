@@ -1583,7 +1583,7 @@ textarea:focus {
 	display: none;
 	border: 1px solid #e5e5e5;
 	padding: 20px;
-	width: 290px;
+	width: 320px;
 	background: #ffffff;
 	text-align: left;
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -1689,7 +1689,6 @@ textarea:focus {
 	text-transform: uppercase;
 	width: 100%;
 	font-weight: bold;
-	font-family: "Poppins", sans-serif;
 	margin-top: 10px;
 }
 .minicart .minicart-total span {
@@ -4060,7 +4059,7 @@ thead {
 	height: 42px;
 	width: 120px;
 }
-.coupon-all input.button {
+.coupon-all input.button, .btn-cart {
 	background-color: #333;
 	border: 0 none;
 	border-radius: 2px;
@@ -5480,4 +5479,9 @@ span.required {
 	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 50%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 50%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+
+.product-list .add-actions-link .add-cart,
+button.add-to-cart { 
+	cursor: pointer;
 }
