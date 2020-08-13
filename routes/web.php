@@ -14,32 +14,62 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'FrontpageController@home');
+
 Route::get('product-list', 'FrontpageController@productList');
+
 Route::get('product/{product}', 'FrontpageController@productDetails');
+
 Route::get('product/{product}/ajax', 'FrontpageController@ajaxProduct');
+
 Route::get('cart/ajax', 'FrontpageController@ajaxCart');
+
 Route::get('cart/{product}/ajaxAdd/{quantity?}', 'FrontpageController@ajaxAddCart');
+
 Route::get('cart/{product}/ajaxRemove', 'FrontpageController@ajaxRemoveCart');
+
 Route::get('cart/ajaxEmpty', 'FrontpageController@ajaxEmptyCart');
+
+Route::post('order/store', 'OrderController@store')->name('order.store');
+
 Route::get('about', 'FrontpageController@about');
+
 Route::get('contact', 'FrontpageController@contact');
+
 Route::get('checkout', 'FrontpageController@checkout');
+
 Route::get('cart', 'FrontpageController@cart');
+
 Route::get('login', 'FrontpageController@login');
+
 Route::get('register', 'FrontpageController@register');
+
 Route::get('search', 'FrontpageController@search');
+
 Route::post('login', 'Auth\LoginController@login')->name('login');
+
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
-// Admin Route Group
+/*
+|--------------------------------------------------------------------------
+| Admin Route Group
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('admin')->as('admin.')->middleware('auth.admin')->group(function(){
     Route::fallback('AdminController@page404');
+
     Route::get('login', 'AdminController@login');
+
     Route::post('login', 'Auth\LoginController@login')->name('login');
+
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
     Route::get('/', 'AdminController@dashboard');
+
     Route::resource('product', 'ProductController');
+
+    Route::resource('order', 'OrderController')->except(['create', 'store', 'destroy']);
+
     Route::get('media', 'AdminController@media');
 
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {

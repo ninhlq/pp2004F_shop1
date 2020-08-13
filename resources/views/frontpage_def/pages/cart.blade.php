@@ -82,7 +82,7 @@
                                         <span>{{ isset($product) ? $product->money_format(1, $cart['total'], 1100) : 0 }}</span>
                                     </li>
                                 </ul>
-                                <a href="#">Proceed to checkout</a>
+                                <a href="{{ url('checkout') }}">Proceed to checkout</a>
                             </div>
                         </div>
                     </div>

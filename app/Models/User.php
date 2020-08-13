@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return "{$this->last_name} {$this->first_name}";
     }
+
+    public function hasOrders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

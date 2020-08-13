@@ -18,6 +18,8 @@ class CreateTableOrders extends Migration
             $table->tinyInteger('status');
             $table->mediumText('comment')->nullable();
             $table->integer('customer_id');
+            $table->string('ship_to_address')->nullable();
+            $table->timestamp('created_at');
         });
     }
 
