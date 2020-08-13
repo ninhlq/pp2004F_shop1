@@ -67,8 +67,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::findOrFail($id);
-        $statuses = Order::STT;
-        return view('admin_def.pages.order_show', compact('order', 'statuses'));
+        return view('admin_def.pages.order_show', compact('order'));
     }
 
     /**
@@ -80,8 +79,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        $statuses = Order::STT;
-        return view('admin_def.pages.order_edit', compact('order', 'statuses'));
+        return view('admin_def.pages.order_edit', compact('order'));
     }
 
     /**

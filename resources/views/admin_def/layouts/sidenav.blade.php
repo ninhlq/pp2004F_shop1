@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('admin.bill.index') }}">
                     <i class="fa fa-credit-card"></i> <span>Bills</span>
                     <span class="pull-right-container">
                         <span class="label label-primary pull-right">4</span>

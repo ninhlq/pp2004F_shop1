@@ -43,6 +43,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function bill()
+    {
+        return $this->hasOne(Bill::class);
+    }
+
     public function getAmount($tax = false)
     {
         $total = 0;
