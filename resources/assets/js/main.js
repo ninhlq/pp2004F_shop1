@@ -67,33 +67,19 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
           var $html = "";
           if (Array.isArray(result.data)) {
             result.data.forEach(function (data) {
-              var quantity =
-                data.quantity !== "undefined" &&
-                  typeof data.quantity !== "undefined"
-                  ? " &times; " + data.quantity
-                  : "";
-              $html +=
-                '<li data-request="' +
-                data.id +
-                '">' +
-                '<a href="single-product.html" class="minicart-product-image">' +
-                '<img src="' +
-                getThumb(data.images[0].image) +
-                '" alt="cart products">' +
-                "</a>" +
-                '<div class="minicart-product-details">' +
-                '<h6><a href="single-product.html">' +
-                data.name +
-                "</a></h6>" +
-                "<span>" +
-                data.current_price.toLocaleString("it-IT") +
-                ".000 VNĐ</span>" +
-                quantity +
-                "</div>" +
-                '<button class="close" title="Remove">' +
-                '<i class="fa fa-close"></i>' +
-                "</button>" +
-                "</li>";
+              var quantity = data.quantity !== "undefined" && typeof data.quantity !== "undefined" ? " &times; " + data.quantity : "";
+              $html +=  '<li data-request="' + data.id + '">' +
+                          '<a href="single-product.html" class="minicart-product-image">' +
+                            '<img src="' + getThumb(data.images[0].image) + '" alt="cart products">' +
+                          "</a>" +
+                          '<div class="minicart-product-details">' +
+                            '<h6><a href="single-product.html">' + data.name + "</a></h6>" +
+                            "<span>" + data.current_price.toLocaleString("it-IT") + ".000 VNĐ</span>" + quantity +
+                          "</div>" +
+                          '<button class="close" title="Remove">' +
+                            '<i class="fa fa-close"></i>' +
+                          "</button>" +
+                        "</li>";
             });
           }
           $(".minicart-product-list").html($html);

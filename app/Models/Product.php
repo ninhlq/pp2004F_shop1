@@ -28,6 +28,12 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function inOrder()
+    {
+        return $this->belongsToMany(Order::class, 'order_details', 'product_id', 'order_id')
+            ->withPivot('price', 'quantity_ordered');
+    }
+
     public function images()
     {
         return $this->hasMany(ProductImage::class);

@@ -29,7 +29,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('admin.order.index') }}">
                     <i class="fa fa-truck"></i> <span>Orders</span>
                     <span class="pull-right-container">
                         <span class="label label-primary pull-right">4</span>

@@ -4,18 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Traits\CartTrait;
 
 class FrontpageController extends Controller
 {
+    use CartTrait;
+
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             $cart = session()->get('cart');
-            $products = $this->getCartDetails();
-            \View::share('cart', [
-                'count' => count($cart),
-                'total' => $products['total'],
-            ]);
+            if (!empty($cart)) {
+                $products = $this->getCartDetails();
+                \View::share('cart', [
+                    'count' => count($cart),
+                    'total' => $products['total'],
+                ]);
+            }
             return $next($request);
         });
     }
@@ -48,14 +53,28 @@ class FrontpageController extends Controller
 
     public function checkout()
     {
-        return view('frontpage_def.pages.checkout');
+        $cart = session()->get('cart');
+        if (!empty($cart)) {
+            $products = Product::with('images')->find($cart);
+            $total = $products->sum('current_price');
+            $quantity = session()->get('cart-quantity');
+            foreach ($quantity as $key => $value) {
+                foreach($products as $product) {
+                    if ($product->id === $key) {
+                        $product->quantity = $value;
+                        $total += $product->current_price * ($value - 1);
+                    }
+                }
+            }
+            return view('frontpage_def.pages.checkout', compact('products', 'total'));
+        }
     }
 
     public function cart()
     {
         $cart = session()->get('cart');
         if (!empty($cart)) {
-            $products = Product::with('images')->findOrFail($cart);
+            $products = Product::with('images')->find($cart);
             return view('frontpage_def.pages.cart', compact('products'));
         } else {
             return view('frontpage_def.pages.cart');
@@ -80,27 +99,29 @@ class FrontpageController extends Controller
     protected function getCartDetails()
     {
         $cart = session()->get('cart');
-        $products = Product::findOrFail($cart);
-        $total = $products->sum('current_price');
-        $quantity = session()->get('cart-quantity');
-        if (!empty($quantity)){
-            foreach ($quantity as $key => $value) {
-                foreach($products as $product) {
-                    if ($product->id === $key) {
-                        $total += $product->current_price * ($value - 1);
+        if (!empty($cart)) {
+            $products = Product::find($cart);
+            $total = $products->sum('current_price');
+            $quantity = session()->get('cart-quantity');
+            if (!empty($quantity)){
+                foreach ($quantity as $key => $value) {
+                    foreach($products as $product) {
+                        if ($product->id === $key) {
+                            $total += $product->current_price * ($value - 1);
+                        }
                     }
                 }
             }
+            return [
+                'count' => count($cart),
+                'total' => $total,
+            ];
         }
-        return [
-            'count' => count($cart),
-            'total' => $total,
-        ];
     }
 
     public function ajaxProduct(Request $request)
     {
-        $product = Product::findOrFail($request->product);
+        $product = Product::find($request->product);
         if ($product) {
             $html = view('frontpage_def.partials.modal_product_preview')->with('product', $product)->render();
             return response()->json([
@@ -115,7 +136,7 @@ class FrontpageController extends Controller
     public function ajaxCart(Request $request)
     {
         $cart = session()->get('cart');
-        $products = Product::with('images')->findOrFail($cart);
+        $products = Product::with('images')->find($cart);
         $quantity = session()->get('cart-quantity');
         foreach ($quantity as $key => $value) {
             foreach($products as $product) {
@@ -176,8 +197,7 @@ class FrontpageController extends Controller
 
     public function ajaxEmptyCart()
     {
-        session()->put('cart', []);
-        session()->put('cart-quantity', []);
+        $this->emptyCart();
         if (empty(session()->get('cart'))) {
             return response()->json(true);
         }

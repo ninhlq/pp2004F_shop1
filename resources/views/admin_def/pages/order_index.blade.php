@@ -1,38 +1,36 @@
 @extends('admin_master_def')
 
-@section('title', '| Product List')
+@section('title', '| Order List')
 
 @section('content')
     <div class="col-xs-12">
-        <h3>Product List</h3>
+        <h3>Order List</h3>
         <div class="box box-warning">
             <div class="box-body">
-                <table id="table-products" class="table">
+                <table id="table-orders" class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Product Name</th>
-                            <th>Brand</th>
-                            <th width="140px">Import Price (VNĐ)</th>
-                            <th width="140px">Current Price (VNĐ)</th>
-                            <th width="150px">Sales last month</th>
-                            <th width="150px">Total sales</th>
-                            <th width="80px">Action</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th width="30%">Amount</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($products as $product)
+                        @foreach($orders as $order)
                         <tr>
-                            <td>{{ $product->id }}</td>
-                            <td><a href="{{ route('admin.product.show', $product->id) }}">{{ $product->name }}</a></td>
-                            <td>{{ $product->brand->name }}</td>
-                            <td>{{ $product->money_format(1, $product->buy_price) }}</td>
-                            <td>{{ $product->money_format() }}</td>
-                            <td>fdsgdsf</td>
-                            <td>fdsgdsf</td>
+                            <td></td>
+                            <td>{{ $order->customer->getFullName() }}</td>
+                            <td>{{ $order->status . ' - ' . $order->textStatus() }}</td>
+                            <td>{{ $order->orderedProducts[0]->money_format(1, $order->getAmount(true)) }} VNĐ</td>
+                            <td>{{ $order->created_at }}</td>
+                            <td>{{ (count($order->log) > 0) ? $order->log->last()->updated_at : $order->created_at }}</td>
                             <td>
-                                <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-default"><i class="fa fa-edit"></i></a>
-                                <a href="" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                                <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+                                <a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-default"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -54,7 +52,7 @@
 
 @push('js')
     <script>
-        $('#table-products').DataTable({
+        $('#table-orders').DataTable({
             'paging'      : true,
             'lengthChange': false,
             'searching'   : true,
@@ -63,7 +61,6 @@
             'autoWidth'   : false,
             'columns'     : [
                 {orderable: true, visible: false},
-                {orderable: true},
                 {orderable: true},
                 {orderable: true},
                 {orderable: true},
