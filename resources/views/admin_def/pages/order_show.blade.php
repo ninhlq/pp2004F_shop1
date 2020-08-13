@@ -45,7 +45,7 @@
                             </tr>
                             <tr>
                                 <th>Updated At</th>
-                                <td>{{ (count($order->log) > 0) ? $order->getLatestUpdate()->updated_at : $order->created_at }}</td>
+                                <td>{{ (count($order->log) > 0) ? $order->log->last()->updated_at : $order->created_at }}</td>
                             </tr>
                             <tr>
                                 <th>Subtotal</th>
@@ -55,10 +55,12 @@
                                 <th>Total Amount (VAT required)</th>
                                 <td><h4>{{ $product->money_format(1, $order->getAmount(true)) }} VNĐ</h4></td>
                             </tr>
+                            @if ($order->status !== $order::STT['completed'] )
                             <tr>
                                 <td></td>
                                 <td><a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a></td>
                             </tr>
+                            @endif
                         </table>
                     </form>
                 </div>

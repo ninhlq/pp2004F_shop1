@@ -13,4 +13,9 @@ class Bill extends Model
     ];
 
     public $timestamps = false;
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

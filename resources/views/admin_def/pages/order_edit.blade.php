@@ -37,10 +37,10 @@
                             </tr>
                             <tr>
                                 <th>Status</th>
-                                <td>@if(!empty($statuses))
+                                <td>@if(!empty($order::STT['completed']) || $order->status !== $order::STT['completed'])
                                     <select name="status" class="form-control">
                                         <option value="">--- Please choose a status</option>
-                                        @foreach($statuses as $status)
+                                        @foreach($order::STT as $status)
                                         <option value="{{ $status }}" @if($order->status == $status) {{ 'selected' }} @endif>{{ $order->textStatus($status) }}</option>
                                         @endforeach
                                     </select>
@@ -53,7 +53,7 @@
                             </tr>
                             <tr>
                                 <th>Updated At</th>
-                                <td>{{ (count($order->log) > 0) ? $order->getLatestUpdate()->updated_at : $order->created_at }}</td>
+                                <td>{{ (count($order->log) > 0) ? $order->log->last()->updated_at : $order->created_at }}</td>
                             </tr>
                             <tr>
                                 <th>Subtotal</th>
@@ -66,7 +66,9 @@
                             <tr>
                                 <td></td>
                                 <td>
+                                    @if ($order->status !== 8)
                                     <button type="submit" class="btn btn-warning"><i class="fa fa-save"></i> Update</button>
+                                    @endif
                                     <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-default"><i class="fa fa-refresh"></i> Back</a>
                                 </td>
                             </tr>
