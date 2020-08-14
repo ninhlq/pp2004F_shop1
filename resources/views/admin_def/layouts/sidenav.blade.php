@@ -44,17 +44,10 @@
                     </span>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#">
+            <li>
+                <a href="{{ route('admin.brand.index') }}">
                     <small><i class="fa fa-mobile fa-2x"></i></small> <span> &nbsp;&nbsp;Brands</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Customers</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Admins</a></li>
-                </ul>
             </li>
             <li class="treeview">
                 <a href="#">

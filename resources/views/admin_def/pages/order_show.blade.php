@@ -120,8 +120,8 @@
             'info'        : false,
             'autoWidth'   : true,
             'columns'     : [
-                {orderable: true},
-                {orderable: true},
+                {orderable: false},
+                {orderable: false},
                 {orderable: true},
             ],
             order: [2, 'desc'],

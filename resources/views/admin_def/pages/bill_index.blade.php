@@ -1,13 +1,13 @@
 @extends('admin_master_def')
 
-@section('title', '| Order List')
+@section('title', '| Bill List')
 
 @section('content')
     <div class="col-xs-12">
-        <h3>Order List</h3>
+        <h3>Bill List</h3>
         <div class="box box-warning">
             <div class="box-body">
-                <table id="table-orders" class="table">
+                <table id="table-bills" class="table">
                     <thead>
                         <tr>
                             <th>Customer</th>
@@ -47,7 +47,7 @@
 
 @push('js')
     <script>
-        $('#table-orders').DataTable({
+        $('#table-bills').DataTable({
             'paging'      : true,
             'lengthChange': false,
             'searching'   : true,

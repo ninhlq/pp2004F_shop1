@@ -65,8 +65,28 @@ class Product extends Model
     public function cartQuantity()
     {
         $quantity = session()->get('cart-quantity');
-        if (array_key_exists($this->id, $quantity)) {
+        if (!empty($quantity) && array_key_exists($this->id, $quantity)) {
             return $quantity[$this->id];
         }
+    }
+
+    public function getTotalSales()
+    {
+        $sales = \DB::table('orders')
+            ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+            ->where('status', Order::STT['completed'])
+            ->where('product_id', $this->id)
+            ->sum('quantity_ordered');
+        return $sales;
+    }
+
+    public function getTotalAmount()
+    {
+        $total = \DB::table('orders')
+            ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+            ->where('status', Order::STT['completed'])
+            ->where('product_id', $this->id)
+            ->sum(\DB::RAW('quantity_ordered * price'));
+        return $total;
     }
 }

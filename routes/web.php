@@ -72,6 +72,8 @@ Route::prefix('admin')->as('admin.')->middleware('auth.admin')->group(function()
 
     Route::resource('bill', 'BillController')->only(['index', 'show']);
 
+    Route::resource('brand', 'BrandController')->except(['create', 'edit']);
+
     Route::get('media', 'AdminController@media');
 
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {
