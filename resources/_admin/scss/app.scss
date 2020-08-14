@@ -93,6 +93,17 @@ table.dataTable {
     }
 }
 
+@media (min-width: 768px) {
+    .modal-center {
+        .modal-dialog {
+            height: 80%;
+        }
+        .modal-content {
+            top: 40%;
+        }
+    }
+}
+
 .message-wrapper {
     position: fixed;
     top: 30px;

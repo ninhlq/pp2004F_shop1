@@ -57,7 +57,8 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
     ".ht-setting-trigger, .ht-currency-trigger, .ht-language-trigger, .hm-minicart-trigger, .cw-sub-menu"
   ).on("click", function (e) {
     e.preventDefault();
-    if ($(this).hasClass("hm-minicart-trigger")) {
+    var $t = $(this);
+    if ($t.hasClass("hm-minicart-trigger")) {
       $.ajax({
         type: "get",
         url: "cart/ajax",
@@ -88,16 +89,14 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
           return false;
         });
     }
-    $(this).toggleClass("is-active");
-    $(this)
-      .siblings(
-        ".ht-setting, .ht-currency, .ht-language, .minicart, .cw-sub-menu li"
-      )
-      .slideToggle();
+    setTimeout(function(){
+      $t.toggleClass("is-active");
+      $t.next().toggleClass("is-active");
+    }, 100);
+    $t.siblings(".ht-setting, .ht-currency, .ht-language, .minicart, .cw-sub-menu li")
+      .slideToggle(250);
   });
-  $(".ht-setting-trigger.is-active")
-    .siblings(".catmenu-body")
-    .slideDown();
+  $(".ht-setting-trigger.is-active").siblings(".catmenu-body").slideDown();
   /*----------------------------------------*/
   /* 03. Li's Sticky Menu Activation
 /*----------------------------------------*/
@@ -501,8 +500,8 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
   $(".cart-plus-minus").append(
     '<div class="dec qtybutton"><i class="fa fa-angle-down"></i></div><div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>'
   );
-  $(".qtybutton").on("click", function () {
-    var $button = $(this);
+  function changeCartQty($el) {
+    var $button = $el;
     var oldValue = $button
       .parent()
       .find("input")
@@ -521,6 +520,12 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
       .parent()
       .find("input")
       .val(newVal);
+  }
+  $(".qtybutton").on("click", function () {
+    changeCartQty($(this));
+  });
+  $(".modal-ajax").on("click", ".qtybutton", function () {
+    changeCartQty($(this));
   });
   /*----------------------------------------*/
   /* 23. Single Prduct Carousel Activision
@@ -602,7 +607,9 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
     $total = $(
       ".hm-minicart-trigger .cart-total, .minicart-total span:nth-of-type(2), .cart-page-total .cart-subtotal span:nth-of-type(2)"
     );
-    $counter.html(data.count);
+    $count = data.count != 0 ? data.count : '';
+
+    $counter.html($count);
     $total.html((data.total * 1000).toLocaleString("it-IT"));
     $(".cart-page-total .cart-total span:nth-of-type(2)").html(
       (data.total * 1100).toLocaleString("it-IT")

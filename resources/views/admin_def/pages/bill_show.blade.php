@@ -1,10 +1,10 @@
 @extends('admin_master_def')
 
-@section('title', '| Order Details')
+@section('title', '| Bill Details')
 
 @section('content')
 <div class="col-xs-12">
-<h3>Order Details</h3>
+<h3>Bill Details</h3>
 </div>
 <div class="col-xs-12 col-md-6">
     <div class="ro">

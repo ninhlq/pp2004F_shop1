@@ -116,6 +116,11 @@ class FrontpageController extends Controller
                 'count' => count($cart),
                 'total' => $total,
             ];
+        } else {
+            return [
+                'count' => 0,
+                'total' => 0,
+            ];
         }
     }
 
