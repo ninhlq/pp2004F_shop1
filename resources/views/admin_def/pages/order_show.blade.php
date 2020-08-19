@@ -48,6 +48,14 @@
                                 <td>{{ (count($order->log) > 0) ? $order->log->last()->updated_at : $order->created_at }}</td>
                             </tr>
                             <tr>
+                                <th>Customer Notes</th>
+                                <td>{{ $order->comment ?? '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Ship to Address*</th>
+                                <td>{{ $order->ship_to_address ?? '' }}</td>
+                            </tr>
+                            <tr>
                                 <th>Subtotal</th>
                                 <td>{{ $product->money_format(1, $order->getAmount()) }} VNĐ</td>
                             </tr>

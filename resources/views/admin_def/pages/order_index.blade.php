@@ -25,7 +25,7 @@
                             <td></td>
                             <td>{{ $order->customer->getFullName() }}</td>
                             <td>{{ $order->status . ' - ' . $order->textStatus() }}</td>
-                            <td>{{ $order->orderedProducts[0]->money_format(1, $order->getAmount(true)) }} VNĐ</td>
+                            <td>{{ number_format($order->getAmount(true) * 1000, 0, ',', '.') }} VNĐ</td>
                             <td>{{ $order->created_at }}</td>
                             <td>{{ (count($order->log) > 0) ? $order->log->last()->updated_at : $order->created_at }}</td>
                             <td>

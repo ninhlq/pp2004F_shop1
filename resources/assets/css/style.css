@@ -64,35 +64,7 @@
 	font-family: 'Poppins', sans-serif;
 	font-family: 'Rubik', sans-serif;
 */
-@import url(
-    https://fonts.googleapis.com/css?family=Poppins:100,
-    100i,
-    200,
-    200i,
-    300,
-    300i,
-    400,
-    400i,
-    500,
-    500i,
-    600,
-    600i,
-    700,
-    700i,
-    800,
-    800i,
-    900,
-    900i|Rubik:300,
-    300i,
-    400,
-    400i,
-    500,
-    500i,
-    700,
-    700i,
-    900,
-    900i
-);
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Rubik:300,300i,400,400i,500,500i,700,700i,900,900i');
 /*----------------------------------------*/
 /*  01. Dfault Style
 /*----------------------------------------*/
@@ -1255,7 +1227,9 @@ textarea:focus {
 }
 
 .product-details-images .lg-image img,
-.product-details-thumbs .sm-image img {
+.product-details-thumbs .sm-image img,
+.lg-image img,
+.sm-image img {
     width: 100%;
 }
 
@@ -2417,19 +2391,22 @@ textarea:focus {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 .product-image > span.sticker {
-    background: #0363cd;
+    background: #8bb706;
     border-radius: 100%;
     color: #fff;
     right: 15px;
     position: absolute;
     top: 20px;
-    z-index: 99;
+    z-index: 1;
     height: 40px;
     width: 40px;
     line-height: 40px;
     text-align: center;
     text-transform: uppercase;
     font-size: 11px;
+}
+.product-image > span.sticker.sticker-hot {
+    background: #db371a;
 }
 .product-review {
     border-bottom: 1px solid #ebebeb;
@@ -3307,8 +3284,8 @@ textarea:focus {
     font-family: fontawesome;
 }
 .category-heading > h2 > i {
-    float: ;
-    text-align: ;
+    float: left;
+    text-align: left;
     float: right;
     padding-right: 20px;
     font-size: 12px;

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Order;
 use App\Traits\CartTrait;
 
 class FrontpageController extends Controller
@@ -23,22 +25,51 @@ class FrontpageController extends Controller
             }
             return $next($request);
         });
+
+        $menu = ['Apple', 'Samsung', 'Oppo', 'Vsmart'];
+        $menuList = $brands = [];
+        foreach ($menu as $menu) {
+            $brand = Brand::where('name', $menu)->pluck('id');
+            array_push($brands, $brand->first());
+            $menu = strtolower($menu);
+            $products = Product::where('brand_id', $brand)->orderBy('id', 'desc')->take(18)->get();
+            if (count($products) > 0) {
+                $menuList[$menu] = $products;
+            }
+        }
+        $others = Brand::whereNotIn('id', $brands)->get();
+        $menuList['others'] = Product::whereIn('brand_id', $others->pluck('id'))->orderBy('id', 'desc')->take(12)->get();
+        \View::share(compact('menuList', 'others'));
     }
 
     public function home()
     {
-        $products = Product::orderBy('id', 'desc')->paginate(20);
-        return view('frontpage_def.pages.index', compact('products'));
+        $new_arrival = Product::orderBy('id', 'desc')->take(10)->get();
+        $products = Product::whereNotIn('id', $new_arrival->pluck('id'))->orderBy('id', 'desc')->paginate(12);
+
+        $bs_orders = Order::where('status', Order::STT['completed'])->pluck('id');
+        $bs_products = \DB::table('order_details')
+            ->select(\DB::RAW('product_id, sum(quantity_ordered) AS total'))
+            ->whereIn('order_id', $bs_orders)
+            ->groupBy('product_id')
+            ->orderBy('total', 'desc')
+            ->take(10)
+            ->get();
+        $best_sellers = Product::find($bs_products->pluck('product_id'));
+        return view('frontpage_def.pages.index', compact('products', 'best_sellers', 'new_arrival'));
     }
 
-    public function productList()
+    public function brand($id)
     {
-        return view('frontpage_def.pages.product_list');
+        $products = Product::where('brand_id', $id)->paginate(12);
+        return view('frontpage_def.pages.product_list', compact('products'));
     }
 
-    public function productDetails()
+    public function productDetails($id)
     {
-        return view('frontpage_def.pages.product_details');
+        $product = Product::findOrFail($id);
+        $relates = Product::where('brand_id', $product->brand_id)->where('id', '<>', $product->id)->take(10)->get();
+        return view('frontpage_def.pages.product_details', compact('product', 'relates'));
     }
 
     public function about()
@@ -58,16 +89,19 @@ class FrontpageController extends Controller
             $products = Product::with('images')->find($cart);
             $total = $products->sum('current_price');
             $quantity = session()->get('cart-quantity');
-            foreach ($quantity as $key => $value) {
-                foreach($products as $product) {
-                    if ($product->id === $key) {
-                        $product->quantity = $value;
-                        $total += $product->current_price * ($value - 1);
+            if (!empty($quantity)) {
+                foreach ($quantity as $key => $value) {
+                    foreach($products as $product) {
+                        if ($product->id === $key) {
+                            $product->quantity = $value;
+                            $total += $product->current_price * ($value - 1);
+                        }
                     }
                 }
             }
             return view('frontpage_def.pages.checkout', compact('products', 'total'));
         }
+        return redirect()->back();
     }
 
     public function cart()
@@ -94,6 +128,28 @@ class FrontpageController extends Controller
     public function search()
     {
         return view('frontpage_def.pages.search');
+    }
+
+    public function searchSubmit(Request $request)
+    {
+        if ($request->q !== null) {
+            $products = Product::where('name', 'like', "%$request->q%")
+                ->orderBy('id', 'desc')
+                ->paginate(20)
+                ->appends([
+                    'q' => $request->q,
+                    '_token' => $request->_token,
+                    '_method' => $request->_method,
+                ]);
+            
+            if (count($products) > 0) {
+                $total = $products->total();
+                $fromResult = ($products->currentPage() - 1) * $products->perPage() + 1;
+                $toResult = $products->currentPage() !== $products->lastPage() ? $products->currentPage() * $products->perPage() : $total; 
+                return view('frontpage_def.pages.search', compact('products', 'fromResult', 'toResult', 'total'));
+            }
+        }
+        return view('frontpage_def.pages.blank');
     }
 
     protected function getCartDetails()
@@ -143,10 +199,12 @@ class FrontpageController extends Controller
         $cart = session()->get('cart');
         $products = Product::with('images')->find($cart);
         $quantity = session()->get('cart-quantity');
-        foreach ($quantity as $key => $value) {
-            foreach($products as $product) {
-                if ($product->id === $key) {
-                    $product->quantity = $value;
+        if ($quantity) {
+            foreach ($quantity as $key => $value) {
+                foreach($products as $product) {
+                    if ($product->id === $key) {
+                        $product->quantity = $value;
+                    }
                 }
             }
         }
@@ -167,8 +225,9 @@ class FrontpageController extends Controller
             session()->push('cart', $request->product);
         }
         $cart = session()->get('cart');
-        if ($request->quantity || ( array_key_exists($request->product, session()->get('cart-quantity')) &&
-            session()->get('cart-quantity')[$request->product] !== $request->quantity)) {
+        if ($request->quantity || ( !empty($quantity = session()->get('cart-quantity')) 
+        && array_key_exists($request->product, $quantity)
+        && session()->get('cart-quantity')[$request->product] !== $request->quantity)) {
             session()->put('cart-quantity.' . $request->product, $request->quantity);
         }
         if (in_array($request->product, $cart)) {

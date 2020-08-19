@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'FrontpageController@home');
 
-Route::get('product-list', 'FrontpageController@productList');
+Route::get('brand/{id}', 'FrontpageController@brand');
 
-Route::get('product/{product}', 'FrontpageController@productDetails');
+Route::get('product/{product}', 'FrontpageController@productDetails')->name('product.details');
 
 Route::get('product/{product}/ajax', 'FrontpageController@ajaxProduct');
 
@@ -42,6 +42,8 @@ Route::get('cart', 'FrontpageController@cart');
 Route::get('login', 'FrontpageController@login');
 
 Route::get('register', 'FrontpageController@register');
+
+Route::get('search/submit', 'FrontpageController@searchSubmit')->name('search.submit');
 
 Route::get('search', 'FrontpageController@search');
 

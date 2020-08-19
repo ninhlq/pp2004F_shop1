@@ -41,7 +41,6 @@
             </div>
         </div>
     </div>
-    @
 @endsection
 
 @push('lib-css')
