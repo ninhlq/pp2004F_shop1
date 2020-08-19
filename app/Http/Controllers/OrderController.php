@@ -40,10 +40,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = new Order;
-        $order->status = Order::STT['pending'];
-        $order->customer_id = \Auth::user()->id;
-        $order_flag = $order->save();
+        if (!\Auth::check() || empty($request->cart)) {
+            return redirect()->back();
+        }
+        $request['status'] = Order::STT['pending'];
+        $request['customer_id'] = \Auth::user()->id;
+        $order = Order::create($request->all());
         $details_flag = true;
         foreach($request->cart as $item) {
             $product = Product::find($item);
@@ -52,7 +54,7 @@ class OrderController extends Controller
                 'quantity_ordered' => (isset($request->$item)) ? $request->$item : 1,
             ]);
         }
-        if ($order_flag && $details_flag) {
+        if ($order && $details_flag) {
             $this->emptyCart();
             return redirect('/')->withMessage('You have ordered successfully');
         }

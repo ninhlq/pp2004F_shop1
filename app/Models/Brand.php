@@ -20,19 +20,19 @@ class Brand extends Model
 
     public function getTotalSales()
     {
-        $products = \DB::table('products')->where('brand_id', $this->id)->pluck('id');
-        $sales = \DB::table('order_details')->whereIn('product_id', $products)->sum('quantity_ordered');
+        $orders = Order::where('status', Order::STT['completed'])->pluck('id');
+        $products = Product::where('brand_id', $this->id)->pluck('id');
+        $sales = \DB::table('order_details')->whereIn('order_id', $orders)->whereIn('product_id', $products)
+            ->sum('quantity_ordered');
         return $sales;
     }
 
     public function getTotalAmount()
     {
-        $products = \DB::table('products')->where('brand_id', $this->id)->pluck('id');
-        $sales = \DB::table('orders')
-            ->join('order_details', 'orders.id', '=', 'order_details.order_id')
-            ->where('status', Order::STT['completed'])
-            ->whereIn('product_id', $products)
-            ->sum(\DB::raw('quantity_ordered * price'));
+        $orders = Order::where('status', Order::STT['completed'])->pluck('id');
+        $products = Product::where('brand_id', $this->id)->pluck('id');
+        $sales = \DB::table('order_details')->whereIn('order_id', $orders)->whereIn('product_id', $products)
+            ->sum(\DB::RAW('quantity_ordered * price'));
         return $sales;
     }
 }

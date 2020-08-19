@@ -37,12 +37,16 @@
                                     @foreach($products as $product)
                                     @php
                                         $quantity = ($product->cartQuantity() ? $product->cartQuantity() : 1);
+                                        $quantity = (int)$quantity;
                                     @endphp
-                                        <tr data-request="{{ $product->id }}">
+                                        <tr class="cart-item" data-request="{{ $product->id }}" data-quantity="{{ $quantity }}">
                                             <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                            <td class="li-product-thumbnail"><a href="#"><img src="{{ $product->getThumb($product->images[0]->image) }}" alt="Li's Product Image"></a></td>
+                                            <td class="li-product-thumbnail"><a href="#"><img src="{{ $product->getThumb($product->images[0]->image) }}" alt="{{ $product->name }}"></a></td>
                                             <td class="li-product-name"><a href="#">{{ $product->name }}</a></td>
-                                            <td class="li-product-price"><span class="amount">{{ $product->money_format() ?? 0 }}</span></td>
+                                            <td class="li-product-price">
+                                                <span class="amount">{{ $product->money_format() ?? 0 }}</span>
+                                                <input type="hidden" name="" class="amount" value="{{ $product->current_price }}">
+                                            </td>
                                             <td class="quantity">
                                                 <label>Quantity</label>
                                                 <div class="cart-plus-minus">
@@ -63,7 +67,7 @@
                             <div class="coupon-all">
                                 <div class="coupon2">
                                     <button id="empty-cart" class="btn-cart">Reset Cart</button>
-                                    <button class="btn-cart" onClick="window.location.reload();">Update Cart</button>
+                                    <button class="btn-cart btn-update-cart">Update Cart</label>
                                 </div>
                             </div>
                         </div>

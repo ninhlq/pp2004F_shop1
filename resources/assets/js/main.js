@@ -61,7 +61,7 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
     if ($t.hasClass("hm-minicart-trigger")) {
       $.ajax({
         type: "get",
-        url: "cart/ajax",
+        url: base_url + "cart/ajax",
         dataType: "json"
       })
         .done(function (result) {
@@ -70,11 +70,11 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
             result.data.forEach(function (data) {
               var quantity = data.quantity !== "undefined" && typeof data.quantity !== "undefined" ? " &times; " + data.quantity : "";
               $html +=  '<li data-request="' + data.id + '">' +
-                          '<a href="single-product.html" class="minicart-product-image">' +
+                          '<a href="' + base_url + 'product/' + data.id + '" class="minicart-product-image">' +
                             '<img src="' + getThumb(data.images[0].image) + '" alt="cart products">' +
                           "</a>" +
                           '<div class="minicart-product-details">' +
-                            '<h6><a href="single-product.html">' + data.name + "</a></h6>" +
+                            '<h6><a href="' + base_url + 'product/' + data.id + '">' + data.name + "</a></h6>" +
                             "<span>" + data.current_price.toLocaleString("it-IT") + ".000 VNĐ</span>" + quantity +
                           "</div>" +
                           '<button class="close" title="Remove">' +
@@ -219,7 +219,7 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
   $.scrollUp({
     scrollText: '<i class="fa fa-angle-double-up"></i>',
     easingType: "linear",
-    scrollSpeed: 900
+    scrollSpeed: 2000
   });
   /*----------------------------------------*/
   /* 11. Category Menu
@@ -584,10 +584,11 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
   function addCart($el) {
     var url = base_url + "cart/" + $el.data("request") + "/ajaxAdd";
     if ($el.hasClass("add-to-cart")) {
-      var quantity = $el
-        .prev()
-        .find(".cart-plus-minus-box")
-        .val();
+      var quantity = $el.prev().find(".cart-plus-minus-box").val();
+      url += "/" + quantity;
+    }
+    if ($el.hasClass("cart-item")) {
+      var quantity = $el.find(".cart-plus-minus-box").val();
       url += "/" + quantity;
     }
     $.ajax({
@@ -596,7 +597,6 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
       dataType: "json"
     }).done(function (result) {
       if (result.success) {
-        console.log(result.data);
         updateCart(result.data);
       }
     });
@@ -629,18 +629,77 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
       dataType: "json"
     }).done(function (result) {
       if (result) {
-        $parent.remove();     
+        $parent.remove();
+        if ($('.table-cart').length > 0) {
+          $('.table-cart').find('tr').filter("[data-request=" + $parent.data('request') + "]").remove();
+        }
         updateCart(result.data);
       }
     });
   }
 
-  $(".add-cart a").click(function () {
+  function productCarousel($el = null, $thumb = null) {
+    if (!$el) {
+      $el = $(".product-details-images");
+    }
+    if (!$thumb) {
+      $thumb = $el.siblings(".product-details-thumbs, .tab-style-left");
+    }
+    $el.each(function () {
+      var $this = $(this);
+      $this.slick({
+        arrows: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 5000,
+        dots: false,
+        infinite: true,
+        centerMode: false,
+        centerPadding: 0,
+        asNavFor: $thumb,
+      });
+    });
+    $thumb.each(function () {
+      var $this = $(this);
+      var $details = $this.siblings(".product-details-images");
+      $this.slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 5000,
+        dots: false,
+        infinite: true,
+        focusOnSelect: true,
+        centerMode: true,
+        centerPadding: 0,
+        prevArrow:
+          '<span class="slick-prev"><i class="fa fa-angle-left"></i></span>',
+        nextArrow:
+          '<span class="slick-next"><i class="fa fa-angle-right"></i></span>',
+        asNavFor: $details,
+      });
+    });
+  }
+
+  $(".add-cart a, button.add-to-cart").click(function () {
     addCart($(this));
   });
 
   $(".modal .modal-ajax").on("click", "button.add-to-cart", function () {
     addCart($(this));
+  });
+
+  $(".btn-update-cart").click(function(){
+    $items = $('.table-cart tbody tr');
+    $items.each(function(){
+      if ($(this).find('.cart-plus-minus-box').val() !== $(this).data('quantity')) {
+        addCart($(this));
+        $quantity = $(this).find('.cart-plus-minus-box').val();
+        $price = $(this).find('.li-product-price input.amount').val();
+        $(this).find('.product-subtotal .amount').html(($quantity * $price * 1000).toLocaleString("it-IT"));
+      }
+    });
   });
 
   $(".li-product-remove a").click(function () {
@@ -665,6 +724,24 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
       }
     });
   });
+
+  $(".quick-view-btn, .quick-view").click(function () {
+    $.ajax({
+      url: base_url + "product/" + $(this).data("request") + "/ajax",
+      type: "GET",
+      dataType: "json",
+    })
+    .done(function (result) {
+      $("#productPreview").find(".modal-ajax").html(result.html);
+      $carousel = $('#productPreview').find('.product-details-images');
+      productCarousel($carousel);
+    })
+    .fail(function (result) {
+      $("#exampleModalCenter").find(".modal-ajax").html("Not Available");
+    });
+  });
+
+  productCarousel();
 })(jQuery);
 /*----------------------------------------------------------------------------------------------------*/
 /*------------------------------------------> The End <-----------------------------------------------*/

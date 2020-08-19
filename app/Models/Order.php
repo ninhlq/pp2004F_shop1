@@ -10,7 +10,10 @@ class Order extends Model
         'status',
         'comment',
         'ship_to_address',
+        'customer_id',
     ];
+
+    protected $guard = ['customer_id'];
 
     public $timestamp = 'created_at';
     const UPDATED_AT = null;
