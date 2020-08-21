@@ -58,10 +58,9 @@
                         <!-- User image -->
                         <li class="user-header">
                             <img src="{{ asset('_admin/images/dashboard/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
-
                             <p>
-                                Super Admin
-                                <small>Member since May. 2020</small>
+                                {{ \Auth::user()->getFullName() }}
+                                <small>{{ \Auth::user()->role_id }} - since {{ \Auth::user()->email_verified_at }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->

@@ -16,7 +16,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'email',
+        'password',
+        'first_name',
+        'last_name',
+        'phone',
+        'email_verified_at',
+        'remember_token',
+        'role_id',
+        'address1',
+        'address2',
+        'city',
     ];
 
     /**
@@ -39,7 +49,7 @@ class User extends Authenticatable
 
     public function getFullName()
     {
-        return "{$this->last_name} {$this->first_name}";
+        return ($this->last_name && $this->first_name) ? "{$this->last_name} {$this->first_name}" : null;
     }
 
     public function hasOrders()

@@ -1,7 +1,7 @@
 <div class="single-product-wrap">
     <div class="product-image">
         <a href="{{ route('product.details', $product->id) }}">
-            <img src="{{ $product->getThumb($product->images[0]->image) }}" alt="Li's Product Image">
+            <img src="{{ $product->getThumb() }}" alt="{{ $product->name }}">
         </a>
         <span class="sticker sticker-hot">Hot</span>
     </div>

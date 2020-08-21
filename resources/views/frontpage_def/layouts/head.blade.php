@@ -19,6 +19,7 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('app.css') }}">
 <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 
 <script>

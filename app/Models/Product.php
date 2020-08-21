@@ -39,8 +39,11 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
-    public function getThumb($src)
+    public function getThumb($src = null)
     {
+        if ($src === null) {
+            $src = $this->images->first()->image;
+        }
         return preg_replace('#(.*)(\/)(.*)$#', '$1/thumbs/$3', $src);
     }
 
