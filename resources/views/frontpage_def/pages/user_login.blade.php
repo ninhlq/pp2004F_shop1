@@ -41,7 +41,8 @@
                                 </div>
                             </div>
                             <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
-                                <a href="#"> Forgotten pasward?</a>
+                                <a href="{{ route('register') }}"> Not a member? Register</a>
+                                <p><a href="#"> Forgotten password?</a></p>
                             </div>
                             <div class="col-md-12">
                                 <button class="register-button mt-0">Login</button>

@@ -117,12 +117,12 @@ class FrontpageController extends Controller
 
     public function login()
     {
-        return view('frontpage_def.pages.login');
+        return view('frontpage_def.pages.user_login');
     }
 
     public function register()
     {
-        return view('frontpage_def.pages.register');
+        return view('frontpage_def.pages.user_register');
     }
 
     public function search()
@@ -265,5 +265,29 @@ class FrontpageController extends Controller
         if (empty(session()->get('cart'))) {
             return response()->json(true);
         }
+    }
+
+    public function userAccount()
+    {
+        $user = \Auth::check() ? \Auth::user() : null;
+        return view('frontpage_def.pages.user_account', compact('user')); 
+    }
+
+    public function userEditProfile($id)
+    {
+        $user = \Auth::check() ? \Auth::user() : null;
+        return view('frontpage_def.pages.user_edit_profile', compact('user'));
+    }
+
+    public function userUpdateProfile(Request $request)
+    {
+        $user = \Auth::user();
+        if (!empty($user)) {
+            $user->fill($request->all());
+            if ($user->save()) {
+                return redirect()->route('account');
+            }
+        }
+        return redirect()->back()->withInput();
     }
 }

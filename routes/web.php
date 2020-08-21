@@ -41,7 +41,15 @@ Route::get('cart', 'FrontpageController@cart');
 
 Route::get('login', 'FrontpageController@login');
 
-Route::get('register', 'FrontpageController@register');
+Route::get('register', 'FrontpageController@register')->name('register');
+
+Route::post('register', 'UserController@store')->name('register.submit');
+
+Route::get('account', 'FrontpageController@userAccount')->name('account');
+
+Route::get('account/{id}/edit', 'FrontpageController@userEditProfile')->name('account.edit');
+
+Route::match(['PUT', 'PATCH'], 'account/update', 'FrontpageController@userUpdateProfile')->name('account.update');
 
 Route::get('search/submit', 'FrontpageController@searchSubmit')->name('search.submit');
 
@@ -75,6 +83,10 @@ Route::prefix('admin')->as('admin.')->middleware('auth.admin')->group(function()
     Route::resource('bill', 'BillController')->only(['index', 'show']);
 
     Route::resource('brand', 'BrandController')->except(['create', 'edit']);
+
+    Route::get('user-admin/index', 'UserController@admin')->name('user.admin');
+
+    Route::resource('user', 'UserController');
 
     Route::get('media', 'AdminController@media');
 

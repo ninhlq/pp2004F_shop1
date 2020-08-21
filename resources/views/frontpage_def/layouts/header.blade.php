@@ -23,37 +23,30 @@
                                 <div class="language ht-language">
                                     <ul class="ht-setting-list">
                                         <li class="active"><a href="#"><img src="{{ asset('images/menu/flag-icon/1.jpg') }}" alt="">English</a></li>
-                                        <li><a href="#"><img src="{{ asset('images/menu/flag-icon/2.jpg') }}" alt="">Français</a></li>
+                                        <li><a href="#"><img src="{{ asset('images/menu/flag-icon/2.jpg') }}" alt="">Tiếng Việt</a></li>
                                     </ul>
                                 </div>
                             </li>
                             <!-- Language Area End Here -->
                             <!-- Begin Setting Area -->
+                            @if (Auth::check())
                             <li>
                                 <div class="ht-setting-trigger"><span>Setting</span></div>
                                 <div class="setting ht-setting">
                                     <ul class="ht-setting-list">
-                                        <li><a href="login-register.html">My Account</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        @if (Auth::check())
-                                        <li>
-                                        {{-- <form action="{{ route('logout') }}" method="POST">
-                                            @csrf
-                                            @method('POST')
-                                            <button type="submit" class="btn btn-default btn-flat">Sign Out</button>
-                                        </form> --}}
-                                        <a href="{{ route('logout') }}">Sign out</a>
-                                        </li>
-                                        @else
-                                        <li><a href="{{ url('login') }}">Sign In</a></li>
-                                        @endif
+                                        <li><a href="{{ route('account') }}">My Account</a></li>
+                                        <li><a href="#">Checkout</a></li>
+                                        <li><a href="{{ route('logout') }}">Sign out</a></li>
+                                        
                                     </ul>
                                 </div>
                             </li>
-                            <!-- Setting Area End Here -->
-                            @if (Auth::check())
                             <li>{{ Auth::user()->getFullName() }}</li>
+                            @else
+                            <li><a href="{{ url('login') }}">Sign in</a></li>
+                            <li><a href="{{ url('register') }}">Register</a></li>
                             @endif
+                            <!-- Setting Area End Here -->
                         </ul>
                     </div>
                 </div>
