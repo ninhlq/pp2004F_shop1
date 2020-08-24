@@ -1,14 +1,19 @@
 @extends('frontpage_master_def')
 
+<<<<<<< HEAD
 @section('title', '| Checkout')
+=======
+@section('title', '| Edit Profile')
+>>>>>>> 9537d3885bd193aa7c669bcbffb5c4da494b687a
 
 @section('content')
 <div class="breadcrumb-area">
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active">User Account</li>
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li>My Account</li>
+                <li class="active">Edit Profile</li>
             </ul>
         </div>
     </div>
@@ -18,31 +23,10 @@
 <div class="checkout-area pt-60 pb-30">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-3 col-12 user-account">
-                <div class="card info-box">
-                    <div class="card-body">
-                        <div class="media mb-20 d-flex align-items-center">
-                            <div class="w-25 mr-3">
-                                <img src="{{ $user->avatar ? $user->avatar : asset('images/team/1.png') }}" alt="" class="img-thumbnail">
-                            </div>
-                            <div class="media-body">
-                                <h6>{{ ucwords($user->getFullName()) }}</h6>
-                            </div>
-                        </div>
-                        <div class="nav flex-column nav-pills row" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link" href="{{ route('account') }}">Profile</a>
-                            <a class="nav-link">Orders</a>
-                            <a class="nav-link">Billing</a>
-                            <a class="nav-link">Bank Account</a>
-                            <a class="nav-link">Settings</a>
-                            <a class="nav-link" href="{{ route('logout') }}">Sign out</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8 col-md-9 col-12">
-                <h4 class="bg-warning text-white p-3">Edit Profile</h4>
-                <form action="{{ route('account.update', $user->id) }}" method="POST" class="form-vertical pt-40">
+            @include('frontpage_def.layouts.user_sidenav')
+            <div class="col-lg-8 col-md-9 col-12 user-account-right">
+                <span class="page-title bg-warning text-white">Edit Profile</span>
+                <form action="{{ route('user.account.update', $user->id) }}" method="POST" class="form-vertical pt-40">
                     @csrf
                     @method('PATCH')
                     <div class="form-group row align-items-center">
@@ -83,7 +67,8 @@
                     </div>
                     <div class="form-group row align-items-center">
                         <label for="" class="col-form-label col-4"></label>
-                        <button type="submit" class="btn btn-cart ml-15">Update Profile</button>
+                        <button type="submit" class="btn-cart ml-15">Update Profile</button>
+                        <a href="javascript: history.back()" class="btn-cart ml-15">&times; Cancel</a>
                     </div>
                 </form>
             </div>

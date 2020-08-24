@@ -1,14 +1,15 @@
 @extends('frontpage_master_def')
 
-@section('title', '| Checkout')
+@section('title', '| Profile')
 
 @section('content')
 <div class="breadcrumb-area">
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active">User Account</li>
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li>My Account</li>
+                <li class="active">Profile</li>
             </ul>
         </div>
     </div>
@@ -18,30 +19,9 @@
 <div class="checkout-area pt-60 pb-30">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-3 col-12 user-account">
-                <div class="card info-box">
-                    <div class="card-body">
-                        <div class="media mb-20 d-flex align-items-center">
-                            <div class="w-25 mr-3">
-                                <img src="{{ $user->avatar ? $user->avatar : asset('images/team/1.png') }}" alt="" class="img-thumbnail">
-                            </div>
-                            <div class="media-body">
-                                <h6>{{ ucwords($user->getFullName()) }}</h6>
-                            </div>
-                        </div>
-                        <div class="nav flex-column nav-pills row" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link" href="{{ route('account') }}">Profile</a>
-                            <a class="nav-link">Orders</a>
-                            <a class="nav-link">Billing</a>
-                            <a class="nav-link">Bank Account</a>
-                            <a class="nav-link">Settings</a>
-                            <a class="nav-link" href="{{ route('logout') }}">Sign out</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8 col-md-9 col-12">
-                <h4 class="bg-warning text-white p-3">Profile</h4>
+            @include('frontpage_def.layouts.user_sidenav')
+            <div class="col-lg-8 col-md-9 col-12 user-account-right">
+                <span class="page-title bg-warning text-white">Profile</span>
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
@@ -77,7 +57,7 @@
                             <td>{{ $user->email_verified_at ?? '' }}</td>
                         </tr>
                         <tr>
-                            <th scope="row"><a href="{{ route('account.edit', $user->id) }}" class="btn btn-warning text-white">Edit Profile</a></th>
+                            <th scope="row"><a href="{{ route('user.account.edit', $user->id) }}" class="btn-cart">Edit Profile</a></th>
                             <td></td>
                         </tr>
                     </tbody>

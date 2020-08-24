@@ -34,7 +34,7 @@
                                 <div class="ht-setting-trigger"><span>Setting</span></div>
                                 <div class="setting ht-setting">
                                     <ul class="ht-setting-list">
-                                        <li><a href="{{ route('account') }}">My Account</a></li>
+                                        <li><a href="{{ route('user.account') }}">My Account</a></li>
                                         <li><a href="#">Checkout</a></li>
                                         <li><a href="{{ route('logout') }}">Sign out</a></li>
                                         

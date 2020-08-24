@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Order;
 use App\Http\Requests\UserRegisterRequest;
+use App\Traits\UserTrait;
 
 class UserController extends Controller
 {
+    use UserTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -66,7 +70,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $orders = $this->getOrders($user, false);
+        $bills = $orders->where('status', Order::STT['completed']);
+        return view('admin_def.pages.user_show', compact('user', 'orders', 'bills'));
     }
 
     /**
@@ -101,11 +108,5 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function frontpageShow()
-    {
-        $user = \Auth::check() ? \Auth::user() : null;
-        return view('frontpage_def.pages.user_account'); 
     }
 }

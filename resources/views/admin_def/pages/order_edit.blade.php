@@ -26,7 +26,7 @@
                                     @foreach($order->orderedProducts as $product)
                                         <li>
                                             <a href="{{ route('admin.product.show', $product->id) }}">
-                                                <img src="{{ $product->images[0]->image }}" alt="" style="width: 80px; max-height: 100px; margin-right: 10px">
+                                                <img src="{{ $product->images->first()->image }}" alt="" style="width: 80px; max-height: 100px; margin-right: 10px">
                                                 {{ $product->name }} - {{ $product->money_format(1, $product->pivot->price) }} VNĐ
                                                 <b>({!! '&times;' !!} {{ $product->pivot->quantity_ordered }})</b>
                                             </a>

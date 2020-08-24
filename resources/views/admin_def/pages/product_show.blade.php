@@ -21,13 +21,13 @@
                         <div class="product-details-thumbs slider-thumbs-1">                                        
                             @foreach($product->images as $img)
                             <div class="sm-image">
-                                <img src="{{ $product->getThumb($img->image) }}" style="width: 100%; max-height: 120px">
+                                <img src="{{ $product->getThumb() }}" class="img img-thumbnail" style="max-height: 120px">
                             </div>
                             @endforeach
                         </div>
                     @elseif (count($product->images) == 1)
                         <div class="sm-image text-center">
-                            <img src="{{ $product->images[0]->image }}" alt="" class="img-responsive" style="max-height: 330px">    
+                            <img src="{{ $product->images->first()->image }}" alt="" class="img img-responsive" style="max-height: 330px">    
                         </div>
                     @else
                         <p>Product Image Not Available</p>
