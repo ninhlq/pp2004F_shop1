@@ -19,9 +19,9 @@
                             @endforeach
                         </div>
                         <div class="product-details-thumbs slider-thumbs-1">                                        
-                            @foreach($product->images as $img)
+                            @foreach($product->images as $thumb)
                             <div class="sm-image">
-                                <img src="{{ $product->getThumb() }}" class="img img-thumbnail" style="max-height: 120px">
+                                <img src="{{ $product->getThumb($thumb->image) }}" class="img img-thumbnail" style="max-height: 120px">
                             </div>
                             @endforeach
                         </div>
@@ -46,8 +46,16 @@
                                     <td>{{ $product->product_code }}</td>
                                 </tr>
                                 <tr>
+                                    <th>Quantity In Stock</th>
+                                    <td>{{ $product->quantity_in_stock }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Excerpt</th>
+                                    <td>{{ $product->excerpt }}</td>
+                                </tr>
+                                <tr>
                                     <th>Description</th>
-                                    <td>{{ $product->description }}</td>
+                                    <td>{!! $product->description !!}</td>
                                 </tr>
                                 <tr>
                                     <th>Brand</th>

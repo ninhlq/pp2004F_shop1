@@ -20,7 +20,7 @@
             @if(count($product->images) > 1)
             <div class="product-details-thumbs slider-thumbs-1">
                 @foreach($product->images as $thumb)
-            <div class="sm-image"><img src="{{ $product->getThumb() }}" alt="{{ $product->name }}" class="img"></div>
+            <div class="sm-image"><img src="{{ $product->getThumb($thumb->image) }}" alt="{{ $product->name }}" class="img"></div>
                 @endforeach
             </div>
             @endif
@@ -49,7 +49,7 @@
                 </div>
                 <div class="product-desc">
                     <p>
-                        <span>{{ $product->description }}</span>
+                        <span>{{ $product->excerpt }}</span>
                     </p>
                 </div>
                 <div class="single-add-to-cart">

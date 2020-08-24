@@ -27,7 +27,7 @@
             <div class="price-box">
                 <span class="new-price">{{ $product->money_format() }} VNĐ</span>
             </div>
-            <p>{{ $product->description }}</p>
+            <p>{{ $product->excerpt }}</p>
         </div>
     </div>
 </div>
