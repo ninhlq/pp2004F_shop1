@@ -7,7 +7,7 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
                 <li class="active">Billing</li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                             @foreach ($bills as $bill)
                                 <tr>
                                     <td>{{ $bill->bill->check_number }}</td>
-                                    <td>{{ number_format($bill->getAmount()*1100, 0, ',', '.') }} VNĐ</td>
+                                    <td>{{ number_format($bill->getAmount() * 1100, 0, ',', '.') }} VNĐ</td>
                                     <td>{{ $bill->created_at }}</td>
                                     <td class="text-right"><a href="{{ route('user.bill.show', $bill->id) }}" class="btn-sm"><small>View details</small></a></td>
                                 </tr>

@@ -1,10 +1,6 @@
 @extends('frontpage_master_def')
 
-<<<<<<< HEAD
-@section('title', '| Checkout')
-=======
 @section('title', '| Edit Profile')
->>>>>>> 9537d3885bd193aa7c669bcbffb5c4da494b687a
 
 @section('content')
 <div class="breadcrumb-area">

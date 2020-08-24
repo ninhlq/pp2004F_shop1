@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'FrontpageController@home');
+Route::get('/', 'FrontpageController@home')->name('home');
 
 Route::get('brand/{id}', 'FrontpageController@brand');
 
