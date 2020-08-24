@@ -21,7 +21,7 @@
                     </div>
                     <div class="product-details-thumbs slider-thumbs-1">
                         @foreach ($product->images as $img)
-                        <div class="sm-image"><img src="{{ $product->getThumb($img->image) }}" alt="product image thumb"></div>
+                        <div class="sm-image"><img src="{{ $product->getThumb($img->image) }}" alt="{{ $product->name }}"></div>
                         @endforeach
                     </div>
                     @endif
@@ -57,7 +57,7 @@
                         </div>
                         <div class="product-desc">
                             <p>
-                                <span>{{ $product->description }}
+                                <span>{{ $product->excerpt }}
                                 </span>
                             </p>
                         </div>
@@ -136,7 +136,7 @@
         <div class="tab-content">
             <div id="description" class="tab-pane active show" role="tabpanel">
                 <div class="product-description">
-                    <span>{{ $product->description }}</span>
+                    <span>{!! $product->description !!}</span>
                 </div>
             </div>
             <div id="product-details" class="tab-pane" role="tabpanel">
