@@ -21,14 +21,14 @@
                     </div>
                     <div class="product-details-thumbs slider-thumbs-1">
                         @foreach ($product->images as $img)
-                        <div class="sm-image"><img src="{{ $product->getThumb($img->image) }}" alt="product image thumb"></div>
+                        <div class="sm-image"><img src="{{ $product->getThumb($img->image) }}" alt="{{ $product->name }}"></div>
                         @endforeach
                     </div>
                     @endif
                     @if (count($product->images) == 1)
                         <div class="lg-image">
-                            <a class="popup-img venobox vbox-item" href="{{ $product->images[0]->image }}" data-gall="myGallery">
-                                <img src="{{ $product->images[0]->image }}" alt="product image" class="img-responsive">
+                            <a class="popup-img venobox vbox-item" href="{{ $product->images->first()->image }}" data-gall="myGallery">
+                                <img src="{{ $product->images->first()->image }}" alt="product image" class="img-responsive">
                             </a>
                         </div>
                     @endif
@@ -57,7 +57,7 @@
                         </div>
                         <div class="product-desc">
                             <p>
-                                <span>{{ $product->description }}
+                                <span>{{ $product->excerpt }}
                                 </span>
                             </p>
                         </div>
@@ -136,7 +136,7 @@
         <div class="tab-content">
             <div id="description" class="tab-pane active show" role="tabpanel">
                 <div class="product-description">
-                    <span>{{ $product->description }}</span>
+                    <span>{!! $product->description !!}</span>
                 </div>
             </div>
             <div id="product-details" class="tab-pane" role="tabpanel">
@@ -267,7 +267,7 @@
                         <div class="single-product-wrap">
                             <div class="product-image">
                                 <a href="{{ url('product/' . $product->id) }}">
-                                    <img src="{{ $product->getThumb($product->images[0]->image) }}" alt="{{ $product->name }}">
+                                    <img src="{{ $product->getThumb() }}" alt="{{ $product->name }}" class="img">
                                 </a>
                                 <span class="sticker">New</span>
                             </div>

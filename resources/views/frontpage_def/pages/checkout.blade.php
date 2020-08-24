@@ -30,7 +30,7 @@
             </div>
         </div>
         @endif
-        <form action="{{ route('order.store') }}" method="POST">
+        <form action="{{ route('user.order.store') }}" method="POST">
             @csrf
             @method('POST')
             <div class="row">

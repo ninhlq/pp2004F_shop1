@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Order;
 use App\Traits\CartTrait;
+use App\Traits\UserTrait;
 
 class FrontpageController extends Controller
 {
     use CartTrait;
+
+    use UserTrait;
 
     public function __construct()
     {
@@ -18,7 +24,7 @@ class FrontpageController extends Controller
             $cart = session()->get('cart');
             if (!empty($cart)) {
                 $products = $this->getCartDetails();
-                \View::share('cart', [
+                View::share('cart', [
                     'count' => count($cart),
                     'total' => $products['total'],
                 ]);
@@ -39,7 +45,7 @@ class FrontpageController extends Controller
         }
         $others = Brand::whereNotIn('id', $brands)->get();
         $menuList['others'] = Product::whereIn('brand_id', $others->pluck('id'))->orderBy('id', 'desc')->take(12)->get();
-        \View::share(compact('menuList', 'others'));
+        View::share(compact('menuList', 'others'));
     }
 
     public function home()
@@ -48,8 +54,8 @@ class FrontpageController extends Controller
         $products = Product::whereNotIn('id', $new_arrival->pluck('id'))->orderBy('id', 'desc')->paginate(12);
 
         $bs_orders = Order::where('status', Order::STT['completed'])->pluck('id');
-        $bs_products = \DB::table('order_details')
-            ->select(\DB::RAW('product_id, sum(quantity_ordered) AS total'))
+        $bs_products = DB::table('order_details')
+            ->select(DB::RAW('product_id, sum(quantity_ordered) AS total'))
             ->whereIn('order_id', $bs_orders)
             ->groupBy('product_id')
             ->orderBy('total', 'desc')
@@ -117,12 +123,12 @@ class FrontpageController extends Controller
 
     public function login()
     {
-        return view('frontpage_def.pages.login');
+        return view('frontpage_def.pages.user_login');
     }
 
     public function register()
     {
-        return view('frontpage_def.pages.register');
+        return view('frontpage_def.pages.user_register');
     }
 
     public function search()
@@ -265,5 +271,59 @@ class FrontpageController extends Controller
         if (empty(session()->get('cart'))) {
             return response()->json(true);
         }
+    }
+
+    public function userAccount()
+    {
+        $user = Auth::check() ? Auth::user() : null;
+        return view('frontpage_def.pages.user_account', compact('user')); 
+    }
+
+    public function userEditProfile($id)
+    {
+        $user = Auth::check() ? Auth::user() : null;
+        return view('frontpage_def.pages.user_edit_profile', compact('user'));
+    }
+
+    public function userUpdateProfile(Request $request)
+    {
+        $user = Auth::user();
+        if (!empty($user)) {
+            $profile = \User::find($user->id);
+            $profile->fill($request->all());
+            if ($profile->save()) {
+                return redirect()->route('user.account');
+            }
+        }
+        return redirect()->back()->withInput();
+    }
+
+    public function userOrderIndex()
+    {
+        $user = Auth::user();
+        $orders = $this->getOrders($user);
+        return view('frontpage_def.pages.user_orders', compact('user', 'orders'));
+    }
+
+    public function userOrderShow($id)
+    {
+        $user = Auth::user();
+        $order = $this->getOrderDetails($id);
+        return view('frontpage_def.pages.user_order_details', compact('user', 'order'));
+    }
+
+    public function userBillIndex()
+    {
+        $user = Auth::user();
+        $bills = $this->getBills($user);
+        return view('frontpage_def.pages.user_billing', compact('user', 'bills'));
+    }
+
+    public function userBillShow($id)
+    {
+        $user = Auth::user();
+        $bill = $this->getOrderDetails($id);
+        return view('frontpage_def.pages.user_bill_details', compact('user', 'bill'));
+
     }
 }
