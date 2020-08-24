@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('*', function($view){
+            $view->with('auth_check', \Auth::check())
+                ->with('auth_user', \Auth::user());
+        });
     }
 }

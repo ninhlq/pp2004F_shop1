@@ -26,7 +26,7 @@
                                     @foreach($order->orderedProducts as $product)
                                         <li>
                                             <a href="{{ route('admin.product.show', $product->id) }}">
-                                                <img src="{{ $product->images[0]->image }}" alt="" style="width: 80px; max-height: 100px; margin-right: 10px">
+                                                <img src="{{ $product->images->first()->image }}" alt="" style="width: 80px; max-height: 100px; margin-right: 10px">
                                                 {{ $product->name }} - {{ $product->money_format(1, $product->pivot->price) }} VNĐ
                                                 <b>({!! '&times;' !!} {{ $product->pivot->quantity_ordered }})</b>
                                             </a>
@@ -63,12 +63,15 @@
                                 <th>Total Amount (VAT required)</th>
                                 <td><h4>{{ $product->money_format(1, $order->getAmount(true)) }} VNĐ</h4></td>
                             </tr>
-                            @if ($order->status !== $order::STT['completed'] )
                             <tr>
                                 <td></td>
-                                <td><a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a></td>
+                                <td>
+                                    @if ($order->status !== $order::STT['completed'] )
+                                        <a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
+                                    @endif
+                                    <a href="javascript: history.back()" class="btn btn-default"><i class="fa fa-times"></i> Cancel</a>
+                                </td>
                             </tr>
-                            @endif
                         </table>
                     </form>
                 </div>
