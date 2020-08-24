@@ -13,14 +13,14 @@
                 @endforeach
             @elseif (count($product->images) == 1)
                 <div class="lg-image">
-                    <img src="{{ $product->images[0]->image }}" alt="">
+                    <img src="{{ $product->images->first()->image }}" alt="">
                 </div>
             @endif
             </div>
             @if(count($product->images) > 1)
             <div class="product-details-thumbs slider-thumbs-1">
                 @foreach($product->images as $thumb)
-                <div class="sm-image"><img src="{{ $product->getThumb($thumb->image) }}" alt="product image thumb"></div>
+            <div class="sm-image"><img src="{{ $product->getThumb($thumb->image) }}" alt="{{ $product->name }}" class="img"></div>
                 @endforeach
             </div>
             @endif
@@ -49,7 +49,7 @@
                 </div>
                 <div class="product-desc">
                     <p>
-                        <span>{{ $product->description }}</span>
+                        <span>{{ $product->excerpt }}</span>
                     </p>
                 </div>
                 <div class="single-add-to-cart">
