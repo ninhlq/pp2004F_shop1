@@ -17,6 +17,7 @@ mix.copyDirectory('resources/assets', 'public');
 mix.less('resources/_admin/less/bootstrap.less', 'public/_admin/css')
     .less('resources/_admin/less/admin.less', 'public/_admin/css')
     .less('node_modules/admin-lte/build/less/skins/_all-skins.less', 'public/_admin/css')
+    .sass('resources/scss/app.scss', 'public/app.css')
     .sass('resources/_admin/scss/app.scss', 'public/_admin/css')
     .js([
         'node_modules/admin-lte/build/js/Layout.js',
