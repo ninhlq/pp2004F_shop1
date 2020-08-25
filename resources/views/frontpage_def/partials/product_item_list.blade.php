@@ -1,7 +1,7 @@
 <div class="col-lg-3 col-md-5 pl-0">
     <div class="product-image">
         <a href="{{ url('product/' . $product->id) }}">
-            <img src="{{ $product->getThumb($product->images[0]->image) }}" alt="{{ $product->name }}"">
+            <img src="{{ $product->getThumb() }}" alt="{{ $product->name }}" class="img">
         </a>
         <span class="sticker">New</span>
     </div>
@@ -27,7 +27,7 @@
             <div class="price-box">
                 <span class="new-price">{{ $product->money_format() }} VNĐ</span>
             </div>
-            <p>{{ $product->description }}</p>
+            <p>{{ $product->excerpt }}</p>
         </div>
     </div>
 </div>

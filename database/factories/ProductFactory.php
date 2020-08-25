@@ -13,6 +13,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'buy_price' => $price = $faker->numberBetween(1000, 50000),
         'current_price' => $price - $faker->numberBetween(0, $price*rand(0, 4)/10),
         'quantity_in_stock' => $faker->numberBetween(0, 1000),
+        'excerpt' => $faker->paragraphs(3, true),
         'description' => $faker->paragraphs(3, true),
         'brand_id' => $faker->randomElement(DB::table('brands')->pluck('id')),
         'properties' => json_encode([

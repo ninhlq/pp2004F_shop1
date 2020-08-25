@@ -17,7 +17,7 @@
 <!--Checkout Area Strat-->
 <div class="checkout-area pt-60 pb-30">
     <div class="container">
-        @if (!\Auth::check())
+        @if (!$auth_user)
         <div class="row">
             <div class="col-12">
                 <div class="coupon-accordion">
@@ -36,37 +36,37 @@
             <div class="row">
                 <div class="col-lg-6 col-12">
                     <div class="checkbox-form">
-                        @if (\Auth::check())
+                        @if (\$auth_user)
                         <h3>Billing Details</h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Last Name <span class="required">*</span></label>
-                                    <input placeholder="" type="text" value="{{ \Auth::user()->last_name }}">
+                                    <input placeholder="" type="text" value="{{ $auth_user->last_name }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>First Name <span class="required">*</span></label>
-                                    <input placeholder="" type="text" value="{{ \Auth::user()->first_name }}">
+                                    <input placeholder="" type="text" value="{{ $auth_user->first_name }}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Address <span class="required">*</span></label>
-                                    <input placeholder="Street address" type="text" {{ \Auth::user()->address ?? '' }}>
+                                    <input placeholder="Street address" type="text" {{ $auth_user->address ?? '' }}>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Email Address <span class="required">*</span></label>
-                                    <input placeholder="" type="email" value="{{ \Auth::user()->email }}">
+                                    <input placeholder="" type="email" value="{{ $auth_user->email }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Phone <span class="required">*</span></label>
-                                    <input type="text" name="phone" value="{{ \Auth::user()->phone ?? '' }}">
+                                    <input type="text" name="phone" value="{{ $auth_user->phone ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-12">

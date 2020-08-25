@@ -13,14 +13,19 @@ class Product extends Model
         'buy_price',
         'current_price',
         'quantity_in_stock',
+        'excerpt',
         'description',
-        'sale_off',
         'brand_id',
         'properties',
+        'sale_off',
+        'sale_off_from',
+        'sale_off_to',
     ];
 
     protected $casts = [
         'properties' => Json::class,
+        'sale_off_from' => 'datetime',
+        'sale_off_to' => 'datetime',
     ];
 
     public function brand()
@@ -39,27 +44,29 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
-    public function getThumb($src)
+    public function getThumb($src = null)
     {
+        if ($src === null && count($this->images) > 0) {
+            $src = $this->images->first()->image;
+        }
         return preg_replace('#(.*)(\/)(.*)$#', '$1/thumbs/$3', $src);
-    }
-
-    public function allThumbs($items, $join = true)
-    {
-        $result = [];
-        foreach ($items as $item) {
-            $result[] = $item->image;
-        }
-        if ($join) {
-            $result = implode(',', $result);
-        }
-        return $result;
     }
 
     public function money_format($quantity= 1, $price = null, $multiply = 1000)
     {
         $price = ($price) ? $price : $this->current_price;
         return number_format(($quantity*$price*$multiply), 0, ',', '.');
+    }
+
+    public function getPropKey($input)
+    {
+        $rs = explode('.', $input);
+        return $rs[1];
+    }
+
+    public function getProps()
+    {
+        return collect(json_decode($this->properties))->sortKeys();
     }
 
     public function cartQuantity()

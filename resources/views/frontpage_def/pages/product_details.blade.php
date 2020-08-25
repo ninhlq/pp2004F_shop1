@@ -141,11 +141,44 @@
             </div>
             <div id="product-details" class="tab-pane" role="tabpanel">
                 <div class="product-details-manufacturer">
-                    <a href="#">
-                        <img src="{{ asset('images/product-details/1.jpg') }}" alt="Product Manufacturer Image">
-                    </a>
-                    <p><span>Reference</span> demo_7</p>
-                    <p><span>Reference</span> demo_7</p>
+                    @if (!empty($product->properties))
+                        <div class="accordion" id="accordionExample">
+                            @foreach ($product->getProps() as $key_group => $group)
+                                @php
+                                    $group = collect($group)->sortKeys();
+                                    $key_group = $product->getPropKey($key_group);
+                                    $loop_id_group = $loop->index + 1;
+                                @endphp
+                                <div class="card">
+                                    <div class="card-header" id="heading_{{$loop_id_group}}">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                                data-target="#collapse_{{$loop_id_group}}" aria-expanded="true" aria-controls="collapse_{{$loop_id_group}}">
+                                                <span class="lead">{{ __($key_group) }}</span>
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapse_{{$loop_id_group}}" class="collapse{{ $loop_id_group == 1 ? ' show' : '' }}" aria-labelledby="heading_{{$loop_id_group}}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                        <table class="table">
+                                            @foreach ($group as $key_prop => $prop)
+                                                @php
+                                                    $key_prop = $product->getPropKey($key_prop);
+                                                    $loop_id_prop = $loop->index + 1;
+                                                    $name = "properties[{$loop_id_group}.{$key_group}][{$loop_id_prop}.{$key_prop}]";
+                                                @endphp
+                                                <tr>
+                                                    <td width="30%"><strong>{{ __($key_group . '.' . $key_prop) }}</strong></td>
+                                                    <td>{{ $prop }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
             <div id="reviews" class="tab-pane" role="tabpanel">

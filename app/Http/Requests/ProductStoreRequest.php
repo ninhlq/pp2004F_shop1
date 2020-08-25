@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductRequest extends FormRequest
+class ProductStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return \Auth::check();
     }
 
     /**
@@ -26,11 +26,13 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string',
             'product_code' => 'required|string|unique:products,product_code,' . $this->route('product'),
+            'quantity_in_stock' => 'required|numeric',
+            'excerpt' => 'required|string',
             'description' => 'required|string',
             'brand_id' => 'required|numeric',
             'buy_price' => 'required|numeric',
             'current_price' => 'required|numeric',
-            'thumbs' => 'required|string',
+            'image' => 'required|string',
         ];
     }
 

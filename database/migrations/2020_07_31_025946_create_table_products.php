@@ -21,10 +21,13 @@ class CreateTableProducts extends Migration
             $table->integer('buy_price');
             $table->integer('current_price');
             $table->integer('quantity_in_stock')->default(0);
-            $table->mediumText('description');
-            $table->smallInteger('sale_off')->nullable();
+            $table->mediumText('excerpt');
+            $table->text('description');
             $table->integer('brand_id');
             $table->json('properties')->nullable();
+            $table->smallInteger('sale_off')->nullable();
+            $table->timestamp('sale_off_from')->nullable();  
+            $table->timestamp('sale_off_to')->nullable();  
             $table->timestamps();
         });
     }

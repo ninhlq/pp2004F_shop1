@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Brand;
-use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -38,29 +39,33 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(ProductStoreRequest $request)
     {
         $request->validated();
-
         try {
             $request['slug'] = \Str::random(12);
+            $request['properties'] = json_encode($request->properties);
             $product = Product::create($request->all());
-            
-            if(str_contains($request->thumbs, ',')) {
-                $images = explode(',', $request->thumbs);
-                foreach($images as $value) {
-                    $image = new ProductImage();
-                    $image->product_id = $product->id;
-                    $image->image = $value;
-                    $image->save();
+            $product_flag = $product->save();
+            $image_flag = true;
+            if ($product_flag) {
+                if(str_contains($request->image, ',')) {
+                    $images = explode(',', $request->image);
+                    foreach($images as $value) {
+                        $image = new ProductImage();
+                        $image->product_id = $product->id;
+                        $image->image = $value;
+                        $image_flag = $image->save();
+                    }
+                } else {
+                    $img = new ProductImage();
+                    $img->product_id = $product->id;
+                    $img->image = $request->image;
+                    $image_flag = $img->save();
                 }
-            } else {
-                $image = new ProductImage();
-                $image->product_id = $product->id;
-                $image->image = $request->thumbs;
             }
 
-            if ($product->save() && $image->save()) {
+            if ($product_flag && $image_flag) {
                 return redirect()->route('admin.product.show', $product->id)
                     ->withMessage('OK');
             }
@@ -102,15 +107,27 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
         $request->validated();
+        
         try {
             $product = Product::find($id);
+            $request['properties'] = json_encode($request->properties);
             $product->fill($request->all());
             if ($product->save()) {
-                return redirect()->route('admin.product.show', $product->id)
+                $image_flag = false;
+                foreach ($request->image as $key => $val) {
+                    $img = ProductImage::find($key);
+                    if ($img->image !== $val) {
+                        $image_flag = true; 
+                        $img->fill(['image' => $val])->save();
+                    }
+                }
+                if ($image_flag) {
+                    return redirect()->route('admin.product.show', $product->id)
                     ->withMessage('OK');
+                }
             }
         } catch (\Exception $e) {
             \Log::error("Error at " . __METHOD__ . ". Content: {$e->getMessage()}");
