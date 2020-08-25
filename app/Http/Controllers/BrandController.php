@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Order;
 use App\Models\Product;
+use App\Repositories\Brand\BrandRepositoryInterface;
 
 class BrandController extends Controller
 {
+    protected $brandRepo;
+
+    public function __construct(BrandRepositoryInterface $brandRepo)
+    {
+        $this->brandRepo = $brandRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::orderBy('id', 'desc')->get();
+        $brands = $this->brandRepo->orderBy('id', 'desc')->get();
         return view('admin_def.pages.brand_index', compact('brands'));
     }
 
@@ -40,7 +48,7 @@ class BrandController extends Controller
     {
         try {
             $request['slug'] = \Str::random(16);
-            $brand = Brand::create($request->all());
+            $brand = $this->brandRepo->create($request->all());
             if ($brand->save()) {
                 return redirect()->back();
             }
@@ -57,7 +65,7 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        $brand = Brand::findOrFail($id);
+        $brand = $this->brandRepo->findOrFail($id);
         $products = Product::where('brand_id', $id)->orderBy('id', 'desc')->get();
         return view('admin_def.pages.brand_show', compact('brand', 'products'));
     }
@@ -82,7 +90,7 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $brand = Brand::find($id);
+        $brand = $this->brandRepo->find($id);
         $brand->fill($request->all());
         if ($brand->save()) {
             return redirect()->back();
@@ -99,7 +107,7 @@ class BrandController extends Controller
     {
         $product = Product::where('brand_id', $id)->get();
         if (count($product) == 0) {
-            $delete = Brand::find($id)->delete();
+            $delete = $this->brandRepo->find($id)->delete();
             if ($delete) {
                 return redirect()->route('admin.brand.index');
             }
