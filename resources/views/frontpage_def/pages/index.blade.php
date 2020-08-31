@@ -167,7 +167,9 @@
                     @endforeach
                     @endif
                 </div>
-                {!! $products->links() !!}
+                <div class="mt-30 text-right">
+                    {!! $products->links() !!}
+                </div>
             </div>
             <!-- Li's Section Area End Here -->
         </div>

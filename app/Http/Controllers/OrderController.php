@@ -18,7 +18,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('id', 'desc')->get();
+        $orders = Order::with('log:id,updated_at', 'orderedProducts:product_id', 'customer:id,first_name,last_name')
+            ->orderBy('id', 'desc')->get();
         return view('admin_def.pages.order_index', compact('orders'));
     }
 
@@ -68,7 +69,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('orderedProducts')->findOrFail($id);
         return view('admin_def.pages.order_show', compact('order'));
     }
 

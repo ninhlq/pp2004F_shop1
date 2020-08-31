@@ -6,8 +6,8 @@
                 <img src="{{ asset('_admin/images/dashboard/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ $auth_user->getFullName() }}</p>
-                <a href="#"><i class="fa fa-circle text-success"></i>[{{ $auth_user->role_id}}] Online</a>
+                <p>{{ Auth::user()->getFullName() }}</p>
+                <a href="#"><i class="fa fa-circle text-success"></i>[{{ Auth::user()->role_id}}] Online</a>
             </div>
         </div>
         <ul class="sidebar-menu" data-widget="tree">

@@ -15,7 +15,7 @@
                             <li class="dropdowned megamenu-static-holder"><a>{{ $key }}</a>
                                 <ul class="row megamenu hb-megamenu">
                                     @foreach ($menu as $product)
-                                        <div class="col-lg-4 col-md-6 col-12">
+                                        <div class="col-lg-4 col-md-6 col-12 mb-20">
                                             <div class="row">
                                                 <div class="col-3">
                                                     <a href="{{ url('product/' . $product->id) }}"><img src="{{ $product->getThumb() }}" class="img"></a>
@@ -50,13 +50,13 @@
                                     <div class="col-lg-10 col-md-12 col-12">
                                         <div class="row">
                                             @foreach ($menuList['others'] as $product)
-                                                <div class="col-lg-4 col-md-6 col-12">
+                                                <div class="col-lg-4 col-md-6 col-12 mb-20">
                                                     <div class="row">
                                                         <div class="col-4">
                                                             <a href="{{ url('product/' . $product->id) }}"><img src="{{ $product->getThumb() }}" class="img"></a>
                                                         </div>
                                                         <a href="{{ url('product/' . $product->id) }}" class="pt-10">
-                                                            <span>{{ $product->brand->name }} - {{ $product->name }}</span>
+                                                            <span>{{ $product->name }}</span>
                                                             <p style="font-size: 0.9em">{{ $product->money_format() }} VNĐ</p>
                                                         </a>
                                                     </div>

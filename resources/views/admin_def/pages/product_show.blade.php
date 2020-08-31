@@ -55,10 +55,10 @@
                                             <th>Excerpt</th>
                                             <td>{{ $product->excerpt }}</td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <th>Description</th>
                                             <td>{!! $product->description !!}</td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <th>Brand</th>
                                             <td>{{ $product->brand->name }}</td>

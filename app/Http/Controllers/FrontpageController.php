@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Brand;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
 use App\Traits\CartTrait;
@@ -289,7 +290,7 @@ class FrontpageController extends Controller
     {
         $user = Auth::user();
         if (!empty($user)) {
-            $profile = \User::find($user->id);
+            $profile = User::find($user->id);
             $profile->fill($request->all());
             if ($profile->save()) {
                 return redirect()->route('user.account');

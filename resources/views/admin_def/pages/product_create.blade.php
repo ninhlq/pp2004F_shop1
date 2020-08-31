@@ -503,7 +503,7 @@
      <script>
         var route_prefix = "/filemanager";
         CKEDITOR.replace('prod_description', {
-            height: 100,
+            height: 450,
             filebrowserImageBrowseUrl: route_prefix + '?type=Images',
             filebrowserImageUploadUrl: route_prefix + '/upload?type=Images&_token={{csrf_token()}}',
             filebrowserBrowseUrl: route_prefix + '?type=Files',

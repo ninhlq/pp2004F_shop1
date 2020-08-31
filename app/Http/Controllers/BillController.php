@@ -9,7 +9,8 @@ class BillController extends Controller
 {
     public function index()
     {
-        $bills = Bill::orderBy('id', 'desc')->get();
+        $bills = Bill::with('order', 'order.orderedProducts', 'order.customer:id,first_name,last_name')
+            ->orderBy('id', 'desc')->get();
         return view('admin_def.pages.bill_index', compact('bills'));
     }
 

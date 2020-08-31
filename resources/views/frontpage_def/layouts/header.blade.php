@@ -29,7 +29,7 @@
                             </li>
                             <!-- Language Area End Here -->
                             <!-- Begin Setting Area -->
-                            @if ($auth_check)
+                            @if (Auth::check())
                             <li>
                                 <div class="ht-setting-trigger"><span>Setting</span></div>
                                 <div class="setting ht-setting">
@@ -41,7 +41,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li>{{ $auth_user->getFullName() }}</li>
+                            <li>{{ Auth::user()->getFullName() }}</li>
                             @else
                             <li><a href="{{ url('login') }}">Sign in</a></li>
                             <li><a href="{{ url('register') }}">Register</a></li>
@@ -72,8 +72,8 @@
                 <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                     <!-- Begin Header Middle Searchbox Area -->
                     <form action="{{ route('search.submit') }}" class="hm-searchbox" method="GET">
-                        @csrf
-                        @method('GET')
+                        {{-- @csrf
+                        @method('GET') --}}
                         <select class="nice-select select-search-category">
                             <option value="0">All</option>
                             <option value="10">Laptops</option>

@@ -59,8 +59,8 @@
                         <li class="user-header">
                             <img src="{{ asset('_admin/images/dashboard/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
                             <p>
-                                {{ $auth_user->getFullName() }}
-                                <small>{{ $auth_user->role_id }} - since {{ $auth_user->email_verified_at }}</small>
+                                {{ Auth::user()->getFullName() }}
+                                <small>{{ Auth::user()->role_id }} - since {{ Auth::user()->email_verified_at }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->

@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('brand')->orderBy('id', 'desc')->get();
+        $products = Product::with('brand:id,name')->orderBy('id', 'desc')->get();
         return view('admin_def.pages.product_index', compact('products'));
     }
 
@@ -124,10 +124,10 @@ class ProductController extends Controller
                         $img->fill(['image' => $val])->save();
                     }
                 }
-                if ($image_flag) {
+                //if ($image_flag) {
                     return redirect()->route('admin.product.show', $product->id)
                     ->withMessage('OK');
-                }
+                //}
             }
         } catch (\Exception $e) {
             \Log::error("Error at " . __METHOD__ . ". Content: {$e->getMessage()}");
