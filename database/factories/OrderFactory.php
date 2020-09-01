@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Order::class, function (Faker $faker) {
     return [
-        'status' => $faker->numberBetween(0, 6),
+        'status' => $faker->numberBetween(1, 8),
         'comment' => (rand(0, 100) < 10) ? $faker->paragraphs(3, true) : NULL,
         'customer_id' => $faker->randomElement(DB::table('users')->pluck('id')),
     ];

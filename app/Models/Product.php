@@ -52,10 +52,9 @@ class Product extends Model
         return preg_replace('#(.*)(\/)(.*)$#', '$1/thumbs/$3', $src);
     }
 
-    public function money_format($quantity= 1, $price = null, $multiply = 1000)
+    public function vnd_format($quantity= 1, $multiply = 1000)
     {
-        $price = ($price) ? $price : $this->current_price;
-        return number_format(($quantity*$price*$multiply), 0, ',', '.');
+        return vnd_format($this->current_price, $quantity, $multiply);
     }
 
     public function getPropKey($input)

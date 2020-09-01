@@ -253,7 +253,7 @@ class FrontpageController extends Controller
             unset($cart[$key]);
         }
         session()->put('cart', $cart);
-        $quantity = session()->pull('cart-quanity', []);
+        $quantity = session()->pull('cart-quantity', []);
         if (array_key_exists($request->product, $quantity)) {
             unset($quantity[$request->product]);
         }
