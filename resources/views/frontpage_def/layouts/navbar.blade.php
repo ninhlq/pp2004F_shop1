@@ -22,7 +22,7 @@
                                                 </div>
                                                 <a href="{{ url('product/' . $product->id) }}" class="pt-10">
                                                     <span>{{ $product->name }}</span>
-                                                    <p style="font-size: 0.9em">{{ $product->money_format() }} VNĐ</p>
+                                                    <p style="font-size: 0.9em">{{ $product->vnd_format() }} VNĐ</p>
                                                 </a>
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                                         </div>
                                                         <a href="{{ url('product/' . $product->id) }}" class="pt-10">
                                                             <span>{{ $product->name }}</span>
-                                                            <p style="font-size: 0.9em">{{ $product->money_format() }} VNĐ</p>
+                                                            <p style="font-size: 0.9em">{{ $product->vnd_format() }} VNĐ</p>
                                                         </a>
                                                     </div>
                                                 </div>

@@ -23,7 +23,7 @@
             </div>
             <h4><a class="product_name" href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a></h4>
             <div class="price-box">
-                <span class="new-price">{{ $product->money_format() }} VNĐ</span>
+                <span class="new-price">{{ $product->vnd_format() }} VNĐ</span>
             </div>
         </div>
         <div class="add-actions">

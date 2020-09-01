@@ -53,10 +53,10 @@
                         @foreach($products as $product)
                         <tr>
                             <td><a href="{{ route('admin.product.show', $product->id) }}">{{ $product->name }}</a></td>
-                            <td>{{ $product->money_format(1, $product->buy_price) }}</td>
-                            <td>{{ $product->money_format() }}</td>
+                            <td>{{ vnd_format($product->buy_price) }}</td>
+                            <td>{{ $product->vnd_format() }}</td>
                             <td></td>
-                            <td>{{ number_format($product->getTotalAmount()*1100, 0, ',', '.') }}</td>
+                            <td>{{ vnd_format($product->getTotalAmount(), 1, 1100) }}</td>
                             <td></td>
                             <td>{{ $product->getTotalSales() }}</td>
                         </tr>

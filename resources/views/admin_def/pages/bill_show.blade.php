@@ -24,7 +24,7 @@
                                     <li>
                                         <a href="{{ route('admin.product.show', $product->id) }}">
                                             <img src="{{ $product->images->first()->image }}" alt="" style="width: 80px; max-height: 100px; margin-right: 10px">
-                                            {{ $product->name }} - {{ $product->money_format(1, $product->pivot->price) }} VNĐ
+                                            {{ $product->name }} - {{ vnd_format($product->pivot->price, 1, 1100) }} VNĐ
                                             <b>({!! '&times;' !!} {{ $product->pivot->quantity_ordered }})</b>
                                         </a>
                                     </li>
@@ -42,11 +42,11 @@
                         </tr>
                         <tr>
                             <th>Subtotal</th>
-                            <td>{{ number_format($bill->amount/1.1*1000, 0, ',', '.') }} VNĐ</td>
+                            <td>{{ vnd_format($bill->amount / 1.1) }} VNĐ</td>
                         </tr>
                         <tr>
                             <th>Total Amount (VAT required)</th>
-                            <td><h4>{{ number_format($bill->amount*1000, 0, ',', '.') }} VNĐ</h4></td>
+                            <td><h4>{{ vnd_format($bill->amount) }} VNĐ</h4></td>
                         </tr>
                     </table>
                 </div>

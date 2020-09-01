@@ -125,7 +125,7 @@
                                             <strong class="product-quantity">{!! '&times;' !!} {{ $quantity }}</strong>
                                         </td>
                                         <td class="cart-product-total">
-                                            <span class="amount">{{ $product->money_format($quantity) }} VNĐ</span>
+                                            <span class="amount">{{ vnd_format($product->current_price, $quantity) }} VNĐ</span>
                                         </td>
                                     </tr>
                                     <input type="hidden" name="cart[]" value="{{ $product->id }}" required>
@@ -136,11 +136,11 @@
                                 <tfoot>
                                     <tr class="cart-subtotal">
                                         <th>Cart Subtotal</th>
-                                        <td><span class="amount">{{ $product->money_format(1, $total) }} VNĐ</span></td>
+                                        <td><span class="amount">{{ vnd_format($total) }} VNĐ</span></td>
                                     </tr>
                                     <tr class="order-total">
                                         <th>Order Total</th>
-                                        <td><strong><span class="amount">{{ $product->money_format(1, $total, 1100) }} VNĐ</span></strong></td>
+                                        <td><strong><span class="amount">{{ vnd_format($total, 1, 1100) }} VNĐ</span></strong></td>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -27,7 +27,7 @@
                                         <li>
                                             <a href="{{ route('admin.product.show', $product->id) }}">
                                                 <img src="{{ $product->images->first()->image }}" alt="" style="width: 80px; max-height: 100px; margin-right: 10px">
-                                                {{ $product->name }} - {{ $product->money_format(1, $product->pivot->price) }} VNĐ
+                                                {{ $product->name }} - {{ vnd_format($product->pivot->price) }} VNĐ
                                                 <b>({!! '&times;' !!} {{ $product->pivot->quantity_ordered }})</b>
                                             </a>
                                         </li>
@@ -57,11 +57,11 @@
                             </tr>
                             <tr>
                                 <th>Subtotal</th>
-                                <td>{{ $product->money_format(1, $order->getAmount()) }} VNĐ</td>
+                                <td>{{ vnd_format($order->getAmount()) }} VNĐ</td>
                             </tr>
                             <tr>
                                 <th>Total Amount (VAT required)</th>
-                                <td><h4>{{ $product->money_format(1, $order->getAmount(true)) }} VNĐ</h4></td>
+                                <td><h4>{{ vnd_format($order->getAmount(true)) }} VNĐ</h4></td>
                             </tr>
                             <tr>
                                 <td></td>

@@ -46,7 +46,7 @@
                                             </td>
                                             <td class="li-product-name"><a href="#">{{ $product->name }}</a></td>
                                             <td class="li-product-price">
-                                                <span class="amount">{{ $product->money_format() ?? 0 }}</span>
+                                                <span class="amount">{{ $product->vnd_format() ?? 0 }}</span>
                                                 <input type="hidden" name="" class="amount" value="{{ $product->current_price }}">
                                             </td>
                                             <td class="quantity">
@@ -57,7 +57,7 @@
                                                     <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                 </div>
                                             </td>
-                                            <td class="product-subtotal"><span class="amount">{{ $product->money_format($quantity) ?? 0 }}</span></td>
+                                            <td class="product-subtotal"><span class="amount">{{ vnd_format($product->current_price, $quantity) ?? 0 }}</span></td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -81,11 +81,11 @@
                                 <ul>
                                     <li class="cart-subtotal">Subtotal 
                                         <span style="margin-left: 8px">VNĐ</span>
-                                        <span>{{ isset($product) ? $product->money_format(1, $cart['total']) : 0 }}</span>
+                                        <span>{{ isset($product) ? vnd_format($cart['total']) : 0 }}</span>
                                     </li>
                                     <li class="cart-total">Total 
                                         <span style="margin-left: 8px">VNĐ</span>
-                                        <span>{{ isset($product) ? $product->money_format(1, $cart['total'], 1100) : 0 }}</span>
+                                        <span>{{ isset($product) ? vnd_format($cart['total'], 1, 1100) : 0 }}</span>
                                     </li>
                                 </ul>
                                 <a href="{{ url('checkout') }}">Proceed to checkout</a>

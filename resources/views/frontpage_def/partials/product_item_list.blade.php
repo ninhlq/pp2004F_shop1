@@ -25,7 +25,7 @@
             </div>
             <h4><a class="product_name" href="{{ url('product/' . $product->id) }}">{{ $product->name }}</a></h4>
             <div class="price-box">
-                <span class="new-price">{{ $product->money_format() }} VNĐ</span>
+                <span class="new-price">{{ $product->vnd_format() }} VNĐ</span>
             </div>
             <p>{{ $product->excerpt }}</p>
         </div>

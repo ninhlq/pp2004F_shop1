@@ -37,7 +37,7 @@
                                                 </a>
                                             </span>
                                             <a href="{{ route('product.details', $product->id) }}" target="_blank"><strong>{{ $product->name }}</strong></a>
-                                                --> {{ $product->money_format(1, $product->pivot->price, 1100) }} VNĐ &times; {{ $product->pivot->quantity_ordered }}
+                                                --> {{ vnd_format($product->pivot->price, 1, 1100) }} VNĐ &times; {{ $product->pivot->quantity_ordered }}
                                         </li>
                                     @endforeach
                                     </ul>
